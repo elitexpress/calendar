@@ -1,1 +1,319 @@
-<iframe src="https://calendar.google.com/calendar/embed?height=800&wkst=1&ctz=America%2FToronto&title=Ha%20Schedule&src=ZWxpYWhvdS5yb2ZmZUBnbWFpbC5jb20&src=ZmFtaWx5MDIyMjY2OTI0NjU5NDI4NTczMjlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZDJhYWMyNTRmMjkzMzYyNDAzNmY1NjgwOWY0OGViNWM5ZDIxMDk1NzVlYjNjOWRjNjZhZDAxMDlhOTI3MWJkZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185cGhzaXAwbWJnNDlwNzcybmtuczk0bWRxc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19hYXV0bWxnMHM3Z2o0aDZsMnJocmVkbmdkc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ18zNjFmbTVjNm0xMmJmaXBvajlsODA2ZHNqc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185bm1tdXJtZnVzY2N1bG9sdW9maTRjNm1rc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19mMWVjbjYzOTJjaDRxNDJ1c2NxczkycWhzMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%23ef6c00&color=%23a79b8e&color=%23b39ddb&color=%23f4511e&color=%23009688&color=%23b39ddb&color=%23d50000&color=%230b8043" style="border:solid 1px #777" width="1400" height="800" frameborder="0" scrolling="no"></iframe>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hebrew Academy Schedule for Eliahou Roffe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --main-bg: #f4f6fa;
+            --card-bg: #fff;
+            --accent: #205081;
+            --accent2: #e9effa;
+            --border: #dde3ec;
+            --shadow: 0 2px 8px #0001;
+            --rounded: 12px;
+        }
+        body {
+            background: var(--main-bg);
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header, footer {
+            background: var(--accent);
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        main {
+            flex: 1;
+            max-width: 1400px;
+            margin: 30px auto 16px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow);
+            padding: 1.2em 1.5em;
+            margin-bottom: 20px;
+            min-width: 320px;
+            flex: 1 1 340px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .calendar-iframe {
+            width: 100%;
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow);
+            min-height: 350px;
+            background: #eee;
+        }
+        .section-title {
+            color: var(--accent);
+            margin-bottom: .5em;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: left;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            font-size: 1em;
+            background: var(--accent2);
+            resize: vertical;
+        }
+        button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.5em 1.2em;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin: 0 3px;
+            align-self: flex-start;
+        }
+        button:hover {
+            background: #143052;
+        }
+        button.remove {
+            background: #d33;
+        }
+        button.remove:hover {
+            background: #a00;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        .todo-completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .note-saved {
+            color: green;
+            font-size: 0.95em;
+            margin-left: 10px;
+        }
+        .quick-links a {
+            color: var(--accent);
+            text-decoration: none;
+            margin-right: 12px;
+            font-weight: 500;
+        }
+        .quick-links a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 1000px) {
+            main { flex-direction: column; align-items: center; }
+            .card { max-width: 98vw; }
+        }
+        .todo-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+        .todo-row input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .todo-row .remove {
+            margin-left: auto;
+        }
+        .calendar-container {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto 30px auto;
+            background: #fff;
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .calendar-title {
+            color: var(--accent);
+            font-size: 1.3em;
+            font-weight: 600;
+            margin: 20px 0 5px 0;
+            text-align: center;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span style="font-size:1.5em; font-weight:bold;">Hebrew Academy Schedule for Eliahou Roffe</span>
+    </header>
+    <div class="calendar-container">
+        <div class="calendar-title">Calendar</div>
+        <iframe class="calendar-iframe"
+            src="<iframe src="https://calendar.google.com/calendar/embed?height=800&wkst=1&ctz=America%2FToronto&title=Ha%20Schedule&src=ZWxpYWhvdS5yb2ZmZUBnbWFpbC5jb20&src=ZmFtaWx5MDIyMjY2OTI0NjU5NDI4NTczMjlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZDJhYWMyNTRmMjkzMzYyNDAzNmY1NjgwOWY0OGViNWM5ZDIxMDk1NzVlYjNjOWRjNjZhZDAxMDlhOTI3MWJkZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185cGhzaXAwbWJnNDlwNzcybmtuczk0bWRxc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19hYXV0bWxnMHM3Z2o0aDZsMnJocmVkbmdkc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ18zNjFmbTVjNm0xMmJmaXBvajlsODA2ZHNqc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185bm1tdXJtZnVzY2N1bG9sdW9maTRjNm1rc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19mMWVjbjYzOTJjaDRxNDJ1c2NxczkycWhzMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%23ef6c00&color=%23a79b8e&color=%23b39ddb&color=%23f4511e&color=%23009688&color=%23b39ddb&color=%23d50000&color=%230b8043" style="border:solid 1px #777" width="1400" height="800" frameborder="0" scrolling="no"></iframe>[...]"
+            width="1500" height="1000" frameborder="0" scrolling="no"
+            style="border:solid 1px #777"></iframe>
+    </div>
+    <main>
+        <!-- Notes -->
+        <div class="card">
+            <div class="section-title">Notes (for you or your family)</div>
+            <textarea id="note" placeholder="Write your notes here..."></textarea>
+            <button onclick="saveNote()">Save Note</button>
+            <span class="note-saved" id="savedMsg" style="display:none;">Saved!</span>
+        </div>
+
+        <!-- To-Do List -->
+        <div class="card">
+            <div class="section-title">To-Do List</div>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <input type="text" id="todoInput" placeholder="Add a new task...">
+                <button onclick="addTodo()">Add</button>
+            </div>
+            <div id="todoList"></div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="card">
+            <div class="section-title">Quick Links</div>
+            <div class="quick-links">
+                <a href="https://classroom.google.com/" target="_blank">Google Classroom</a>
+                <a href="https://mail.google.com/" target="_blank">Gmail</a>
+                <a href="https://www.weather.com/" target="_blank">Weather</a>
+                <a href="https://www.hebcal.com/converter/" target="_blank">Hebrew Calendar Converter</a>
+                <a href="https://ha-mtl.org/myha/" target="_blank">MyHA Portal</a>
+            </div>
+        </div>
+
+        <!-- Weather Widget -->
+        <div class="card">
+            <div class="section-title">Today's Weather (Toronto)</div>
+            <div id="weather"></div>
+        </div>
+
+        <!-- Motivational Quote -->
+        <div class="card">
+            <div class="section-title">Motivational Quote</div>
+            <blockquote id="quote" style="margin:0;padding-left:10px;border-left:3px solid #205081;font-size:1.1em;"></blockquote>
+        </div>
+    </main>
+    <footer>
+        <span>Contact: <a href="mailto:eliahou.roffe@students.ha-mtl.org">eliahou.roffe@students.ha-mtl.org</a></span>
+    </footer>
+    <script>
+        // NOTES (persistent per browser)
+        function loadNote() {
+            document.getElementById('note').value = localStorage.getItem('eliahou_note') || '';
+        }
+        function saveNote() {
+            localStorage.setItem('eliahou_note', document.getElementById('note').value);
+            const msg = document.getElementById('savedMsg');
+            msg.style.display = 'inline';
+            setTimeout(() => { msg.style.display = 'none'; }, 1000);
+        }
+        loadNote();
+
+        // TO-DO LIST
+        function loadTodos() {
+            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
+            const container = document.getElementById('todoList');
+            container.innerHTML = '';
+            todos.forEach((todo, idx) => {
+                const row = document.createElement('div');
+                row.className = 'todo-row';
+                row.innerHTML = `
+                    <input type="checkbox" ${todo.done?'checked':''} onchange="toggleTodo(${idx})">
+                    <span class="${todo.done?'todo-completed':''}">${todo.text}</span>
+                    <button class="remove" onclick="removeTodo(${idx})">x</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+        function addTodo() {
+            const val = document.getElementById('todoInput').value.trim();
+            if (!val) return;
+            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
+            todos.push({text: val, done: false});
+            localStorage.setItem('eliahou_todos', JSON.stringify(todos));
+            document.getElementById('todoInput').value = '';
+            loadTodos();
+        }
+        function toggleTodo(idx) {
+            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
+            todos[idx].done = !todos[idx].done;
+            localStorage.setItem('eliahou_todos', JSON.stringify(todos));
+            loadTodos();
+        }
+        function removeTodo(idx) {
+            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
+            todos.splice(idx, 1);
+            localStorage.setItem('eliahou_todos', JSON.stringify(todos));
+            loadTodos();
+        }
+        window.toggleTodo = toggleTodo;
+        window.removeTodo = removeTodo;
+        loadTodos();
+
+        // WEATHER (Open-Meteo API, Toronto)
+        function loadWeather() {
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=43.7&longitude=-79.42&current_weather=true')
+                .then(res => res.json())
+                .then(data => {
+                    const w = data.current_weather;
+                    document.getElementById('weather').innerHTML =
+                        `🌡️ ${w.temperature}&deg;C<br>💨 ${w.windspeed} km/h<br>${w.weathercode==0?'Clear':'Cloudy/Other'}`;
+                });
+        }
+        loadWeather();
+
+        // MOTIVATIONAL QUOTE (with fallback and daily rotation)
+        function getDailyQuote() {
+            // Add as many as you want! These are rotated based on date
+            const quotes = [
+                {q: "The only way to do great work is to love what you do.", a: "Steve Jobs"},
+                {q: "Success is not the key to happiness. Happiness is the key to success.", a: "Albert Schweitzer"},
+                {q: "Believe you can and you're halfway there.", a: "Theodore Roosevelt"},
+                {q: "Don't watch the clock; do what it does. Keep going.", a: "Sam Levenson"},
+                {q: "You are never too old to set another goal or to dream a new dream.", a: "C.S. Lewis"},
+                {q: "It does not matter how slowly you go as long as you do not stop.", a: "Confucius"},
+                {q: "Keep your face always toward the sunshine—and shadows will fall behind you.", a: "Walt Whitman"},
+            ];
+            const day = new Date().getDate();
+            const idx = day % quotes.length;
+            return quotes[idx];
+        }
+
+        function loadQuote() {
+            fetch('https://zenquotes.io/api/random')
+                .then(res => res.json())
+                .then(data => {
+                    if (Array.isArray(data) && data.length && data[0].q) {
+                        document.getElementById('quote').innerText = data[0].q + " — " + data[0].a;
+                    } else {
+                        throw new Error("Empty quote from API");
+                    }
+                })
+                .catch(() => {
+                    // Fallback: show a daily rotating popular quote
+                    const fallback = getDailyQuote();
+                    document.getElementById('quote').innerText = fallback.q + " — " + fallback.a;
+                });
+        }
+        loadQuote();
+    </script>
+</body>
+</html>
