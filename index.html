@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +29,25 @@
             padding: 1em 0;
             text-align: center;
             box-shadow: var(--shadow);
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .school-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .header-title {
+            font-size: 1.5em;
+            font-weight: bold;
         }
         main {
             flex: 1;
@@ -111,18 +129,39 @@
             font-size: 0.95em;
             margin-left: 10px;
         }
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
         .quick-links a {
-            color: var(--accent);
+            display: block;
+            color: white;
             text-decoration: none;
-            margin-right: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
             font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--accent), #2563eb);
         }
         .quick-links a:hover {
-            text-decoration: underline;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .quick-links a.featured {
+            background: linear-gradient(135deg, #059669, #10b981);
+            font-weight: 600;
+            border: 2px solid #34d399;
+        }
+        .quick-links a.school {
+            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
         }
         @media (max-width: 1000px) {
             main { flex-direction: column; align-items: center; }
             .card { max-width: 98vw; }
+            .header-content { flex-direction: column; }
+            .quick-links { grid-template-columns: repeat(2, 1fr); }
         }
         .todo-row {
             display: flex;
@@ -159,62 +198,102 @@
 </head>
 <body>
     <header>
-        <span style="font-size:1.5em; font-weight:bold;">Hebrew Academy Schedule for Eliahou Roffe</span>
+        <div class="header-content">
+            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTY-bpmh7OKcza-75E7tWRkmesz9fXooV2TVZHwCBLgup0UYzcHLNeuWd8oypL_HE_73LIFfMPHiBWF85qwbhdljf6SvqlTTdsgdMtaHZc" 
+                 alt="Hebrew Academy Logo" class="school-logo">
+            <span class="header-title">Hebrew Academy Schedule for Eliahou Roffe</span>
+        </div>
     </header>
     <div class="calendar-container">
-        <div class="calendar-title">Calendar</div>
+        <div class="calendar-title">📅 My Calendar</div>
         <iframe class="calendar-iframe"
-            src="<iframe src="https://calendar.google.com/calendar/embed?height=800&wkst=1&ctz=America%2FToronto&title=Ha%20Schedule&src=ZWxpYWhvdS5yb2ZmZUBnbWFpbC5jb20&src=ZmFtaWx5MDIyMjY2OTI0NjU5NDI4NTczMjlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZDJhYWMyNTRmMjkzMzYyNDAzNmY1NjgwOWY0OGViNWM5ZDIxMDk1NzVlYjNjOWRjNjZhZDAxMDlhOTI3MWJkZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185cGhzaXAwbWJnNDlwNzcybmtuczk0bWRxc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19hYXV0bWxnMHM3Z2o0aDZsMnJocmVkbmdkc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ18zNjFmbTVjNm0xMmJmaXBvajlsODA2ZHNqc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185bm1tdXJtZnVzY2N1bG9sdW9maTRjNm1rc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19mMWVjbjYzOTJjaDRxNDJ1c2NxczkycWhzMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%23ef6c00&color=%23a79b8e&color=%23b39ddb&color=%23f4511e&color=%23009688&color=%23b39ddb&color=%23d50000&color=%230b8043" style="border:solid 1px #777" width="1400" height="800" frameborder="0" scrolling="no"></iframe>[...]"
+            src="https://calendar.google.com/calendar/embed?height=800&wkst=1&ctz=America%2FToronto&title=HA%20Schedule&src=eliahou.roffe%40gmail.com&color=%23039BE5"
             width="1500" height="1000" frameborder="0" scrolling="no"
             style="border:solid 1px #777"></iframe>
     </div>
     <main>
         <!-- Notes -->
         <div class="card">
-            <div class="section-title">Notes (for you or your family)</div>
-            <textarea id="note" placeholder="Write your notes here..."></textarea>
-            <button onclick="saveNote()">Save Note</button>
-            <span class="note-saved" id="savedMsg" style="display:none;">Saved!</span>
+            <div class="section-title">📝 Family Notes</div>
+            <textarea id="note" placeholder="Share notes with family members..."></textarea>
+            <button onclick="saveNote()">💾 Save Note</button>
+            <span class="note-saved" id="savedMsg" style="display:none;">✅ Saved!</span>
         </div>
 
         <!-- To-Do List -->
         <div class="card">
-            <div class="section-title">To-Do List</div>
+            <div class="section-title">✅ To-Do List</div>
             <div style="display:flex; gap:10px; align-items:center;">
                 <input type="text" id="todoInput" placeholder="Add a new task...">
-                <button onclick="addTodo()">Add</button>
+                <button onclick="addTodo()">➕ Add</button>
             </div>
             <div id="todoList"></div>
         </div>
 
         <!-- Quick Links -->
-        <div class="card">
-            <div class="section-title">Quick Links</div>
+        <div class="card" style="min-width: 100%; max-width: 100%;">
+            <div class="section-title">🔗 Quick Links & Study Resources</div>
             <div class="quick-links">
-                <a href="https://classroom.google.com/" target="_blank">Google Classroom</a>
-                <a href="https://mail.google.com/" target="_blank">Gmail</a>
-                <a href="https://www.weather.com/" target="_blank">Weather</a>
-                <a href="https://www.hebcal.com/converter/" target="_blank">Hebrew Calendar Converter</a>
-                <a href="https://ha-mtl.org/myha/" target="_blank">MyHA Portal</a>
+                <a href="https://www.alloprof.qc.ca/" target="_blank" class="featured">
+                    📚 Alloprof
+                </a>
+                <a href="https://ha-mtl.org/myha/" target="_blank" class="school">
+                    🏫 MyHA Portal
+                </a>
+                <a href="https://classroom.google.com/" target="_blank">
+                    📖 Google Classroom
+                </a>
+                <a href="https://mail.google.com/" target="_blank">
+                    📧 Gmail
+                </a>
+                <a href="https://drive.google.com/" target="_blank">
+                    💾 Google Drive
+                </a>
+                <a href="https://www.youtube.com/" target="_blank">
+                    📺 YouTube
+                </a>
+                <a href="https://www.khanacademy.org/" target="_blank">
+                    🎓 Khan Academy
+                </a>
+                <a href="https://www.wolframalpha.com/" target="_blank">
+                    🧮 Wolfram Alpha
+                </a>
+                <a href="https://translate.google.com/" target="_blank">
+                    🌐 Google Translate
+                </a>
+                <a href="https://www.grammarly.com/" target="_blank">
+                    ✏️ Grammarly
+                </a>
+                <a href="https://www.hebcal.com/converter/" target="_blank">
+                    📅 Hebrew Calendar
+                </a>
+                <a href="https://quizlet.com/" target="_blank">
+                    🧠 Quizlet
+                </a>
             </div>
         </div>
 
         <!-- Weather Widget -->
         <div class="card">
-            <div class="section-title">Today's Weather (Toronto)</div>
+            <div class="section-title">🌤️ Weather - Côte Saint-Luc</div>
             <div id="weather"></div>
         </div>
 
         <!-- Motivational Quote -->
         <div class="card">
-            <div class="section-title">Motivational Quote</div>
+            <div class="section-title">💭 Daily Motivation</div>
             <blockquote id="quote" style="margin:0;padding-left:10px;border-left:3px solid #205081;font-size:1.1em;"></blockquote>
         </div>
     </main>
     <footer>
-        <span>Contact: <a href="mailto:eliahou.roffe@students.ha-mtl.org">eliahou.roffe@students.ha-mtl.org</a></span>
+        <span>📞 Contact: <a href="mailto:eliahou.roffe@students.ha-mtl.org">eliahou.roffe@students.ha-mtl.org</a></span>
+        <br>
+        <span style="font-size: 0.9em; opacity: 0.8;">Hebrew Academy Dashboard | Last updated: <span id="lastUpdate"></span></span>
     </footer>
     <script>
+        // Update timestamp
+        document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+
         // NOTES (persistent per browser)
         function loadNote() {
             document.getElementById('note').value = localStorage.getItem('eliahou_note') || '';
@@ -223,22 +302,34 @@
             localStorage.setItem('eliahou_note', document.getElementById('note').value);
             const msg = document.getElementById('savedMsg');
             msg.style.display = 'inline';
-            setTimeout(() => { msg.style.display = 'none'; }, 1000);
+            setTimeout(() => { msg.style.display = 'none'; }, 2000);
         }
         loadNote();
+
+        // Auto-save notes as user types
+        document.getElementById('note').addEventListener('input', function() {
+            clearTimeout(window.noteTimeout);
+            window.noteTimeout = setTimeout(saveNote, 2000);
+        });
 
         // TO-DO LIST
         function loadTodos() {
             const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
             const container = document.getElementById('todoList');
             container.innerHTML = '';
+            
+            if (todos.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No tasks yet. Add one above! 📝</p>';
+                return;
+            }
+            
             todos.forEach((todo, idx) => {
                 const row = document.createElement('div');
                 row.className = 'todo-row';
                 row.innerHTML = `
                     <input type="checkbox" ${todo.done?'checked':''} onchange="toggleTodo(${idx})">
                     <span class="${todo.done?'todo-completed':''}">${todo.text}</span>
-                    <button class="remove" onclick="removeTodo(${idx})">x</button>
+                    <button class="remove" onclick="removeTodo(${idx})">🗑️</button>
                 `;
                 container.appendChild(row);
             });
@@ -247,7 +338,7 @@
             const val = document.getElementById('todoInput').value.trim();
             if (!val) return;
             const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
-            todos.push({text: val, done: false});
+            todos.push({text: val, done: false, created: new Date().toLocaleDateString()});
             localStorage.setItem('eliahou_todos', JSON.stringify(todos));
             document.getElementById('todoInput').value = '';
             loadTodos();
@@ -264,25 +355,58 @@
             localStorage.setItem('eliahou_todos', JSON.stringify(todos));
             loadTodos();
         }
+        
+        // Allow Enter key to add todos
+        document.getElementById('todoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+        
         window.toggleTodo = toggleTodo;
         window.removeTodo = removeTodo;
         loadTodos();
 
-        // WEATHER (Open-Meteo API, Toronto)
+        // WEATHER (Open-Meteo API, Côte Saint-Luc)
         function loadWeather() {
-            fetch('https://api.open-meteo.com/v1/forecast?latitude=43.7&longitude=-79.42&current_weather=true')
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=45.4975&longitude=-73.6658&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=America/Toronto&forecast_days=3')
                 .then(res => res.json())
                 .then(data => {
-                    const w = data.current_weather;
-                    document.getElementById('weather').innerHTML =
-                        `🌡️ ${w.temperature}&deg;C<br>💨 ${w.windspeed} km/h<br>${w.weathercode==0?'Clear':'Cloudy/Other'}`;
+                    const current = data.current_weather;
+                    const today = data.daily;
+                    
+                    const weatherIcon = current.weathercode === 0 ? '☀️' : 
+                                       current.weathercode <= 3 ? '⛅' : '🌧️';
+                    
+                    document.getElementById('weather').innerHTML = `
+                        <div style="text-align: center; padding: 10px;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">${weatherIcon}</div>
+                            <div style="font-size: 1.5em; font-weight: bold; color: var(--accent);">
+                                ${Math.round(current.temperature)}°C
+                            </div>
+                            <div style="margin: 5px 0;">
+                                💨 ${current.windspeed} km/h
+                            </div>
+                            <div style="font-size: 0.9em; color: #666;">
+                                High: ${Math.round(today.temperature_2m_max[0])}° | 
+                                Low: ${Math.round(today.temperature_2m_min[0])}°
+                            </div>
+                            ${today.precipitation_sum[0] > 0 ? 
+                                `<div style="color: #059669; margin-top: 5px;">🌧️ ${today.precipitation_sum[0]}mm expected</div>` : 
+                                '<div style="color: #059669; margin-top: 5px;">☀️ No rain expected</div>'
+                            }
+                        </div>
+                    `;
+                })
+                .catch(() => {
+                    document.getElementById('weather').innerHTML = 
+                        '<div style="text-align: center; color: #d33;">⚠️ Weather unavailable</div>';
                 });
         }
         loadWeather();
 
         // MOTIVATIONAL QUOTE (with fallback and daily rotation)
         function getDailyQuote() {
-            // Add as many as you want! These are rotated based on date
             const quotes = [
                 {q: "The only way to do great work is to love what you do.", a: "Steve Jobs"},
                 {q: "Success is not the key to happiness. Happiness is the key to success.", a: "Albert Schweitzer"},
@@ -291,6 +415,9 @@
                 {q: "You are never too old to set another goal or to dream a new dream.", a: "C.S. Lewis"},
                 {q: "It does not matter how slowly you go as long as you do not stop.", a: "Confucius"},
                 {q: "Keep your face always toward the sunshine—and shadows will fall behind you.", a: "Walt Whitman"},
+                {q: "Education is the most powerful weapon which you can use to change the world.", a: "Nelson Mandela"},
+                {q: "The beautiful thing about learning is that no one can take it away from you.", a: "B.B. King"},
+                {q: "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.", a: "Richard Feynman"}
             ];
             const day = new Date().getDate();
             const idx = day % quotes.length;
@@ -308,7 +435,6 @@
                     }
                 })
                 .catch(() => {
-                    // Fallback: show a daily rotating popular quote
                     const fallback = getDailyQuote();
                     document.getElementById('quote').innerText = fallback.q + " — " + fallback.a;
                 });
