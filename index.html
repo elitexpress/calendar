@@ -185,6 +185,46 @@
             opacity: 0.9;
         }
         
+        /* Upcoming Deadlines */
+        .priority-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background: var(--accent-light);
+            transition: all 0.2s;
+        }
+        .priority-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .priority-item.test {
+            background: #fee7e7;
+        }
+        .priority-item.homework {
+            background: #e6f7f0;
+        }
+        .priority-date {
+            font-weight: 600;
+            padding: 3px 10px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 30px;
+            font-size: 0.85em;
+        }
+        .priority-content {
+            flex: 1;
+            padding: 0 15px;
+        }
+        .priority-subject {
+            font-weight: 600;
+        }
+        .priority-details {
+            font-size: 0.85em;
+            color: var(--text-light);
+        }
+        
         /* Calendar */
         .calendar-iframe {
             width: 100%;
@@ -291,7 +331,7 @@
         }
         
         /* Forms */
-        textarea, input[type="text"], select {
+        textarea, input[type="text"], input[type="date"], select {
             width: 100%;
             padding: 12px;
             border-radius: 8px;
@@ -364,6 +404,15 @@
             text-decoration: line-through;
             opacity: 0.65;
         }
+        .task-date {
+            font-size: 0.8em;
+            font-weight: 500;
+            padding: 2px 6px;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 10px;
+            margin-left: 8px;
+        }
         
         /* Quick Links */
         .quick-links {
@@ -395,6 +444,55 @@
             background: linear-gradient(135deg, #7c3aed, #8b5cf6);
             font-size: 1.1em;
             font-weight: 600;
+        }
+        
+        /* Zmanim styles */
+        .zmanim-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .zmanim-item {
+            background: linear-gradient(135deg, #f0f4f8, #e9effa);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .zmanim-label {
+            font-size: 0.9em;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .zmanim-time {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+        .zmanim-hebrew {
+            font-size: 0.9em;
+            margin-top: 5px;
+            color: var(--text-light);
+        }
+        .parsha {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            grid-column: 1 / -1;
+        }
+        .parsha .zmanim-label {
+            color: white;
+            opacity: 0.9;
+        }
+        .parsha .zmanim-time {
+            font-size: 1.4em;
+        }
+        .candle-lighting {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+        .candle-lighting .zmanim-label {
+            color: white;
+            opacity: 0.9;
         }
         
         /* Responsive */
@@ -509,6 +607,69 @@
                 </div>
             </div>
             
+            <!-- Zmanim Information -->
+            <div class="card">
+                <div class="section-title">✡️ Zmanim for Today</div>
+                <div class="zmanim-container" id="zmanimContainer">
+                    <div class="zmanim-item parsha">
+                        <div class="zmanim-label">Parshat Hashavua</div>
+                        <div class="zmanim-time" id="parsha">Loading...</div>
+                    </div>
+                    <div class="zmanim-item candle-lighting">
+                        <div class="zmanim-label">Candle Lighting</div>
+                        <div class="zmanim-time" id="candleLighting">--:--</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Alot Hashachar</div>
+                        <div class="zmanim-time" id="alotHashachar">--:--</div>
+                        <div class="zmanim-hebrew">עלות השחר</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Sunrise</div>
+                        <div class="zmanim-time" id="sunrise">--:--</div>
+                        <div class="zmanim-hebrew">הנץ החמה</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Sof Zman Shema</div>
+                        <div class="zmanim-time" id="sofZmanShema">--:--</div>
+                        <div class="zmanim-hebrew">סוף זמן קריאת שמע</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Sof Zman Tfilla</div>
+                        <div class="zmanim-time" id="sofZmanTfilla">--:--</div>
+                        <div class="zmanim-hebrew">סוף זמן תפילה</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Chatzot</div>
+                        <div class="zmanim-time" id="chatzot">--:--</div>
+                        <div class="zmanim-hebrew">חצות היום</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Mincha Gedola</div>
+                        <div class="zmanim-time" id="minchaGedola">--:--</div>
+                        <div class="zmanim-hebrew">מנחה גדולה</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Sunset</div>
+                        <div class="zmanim-time" id="sunset">--:--</div>
+                        <div class="zmanim-hebrew">שקיעת החמה</div>
+                    </div>
+                    <div class="zmanim-item">
+                        <div class="zmanim-label">Tzeit Hakochavim</div>
+                        <div class="zmanim-time" id="tzeitHakochavim">--:--</div>
+                        <div class="zmanim-hebrew">צאת הכוכבים</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upcoming Priorities -->
+            <div class="card">
+                <div class="section-title">⚡ Upcoming Priorities</div>
+                <div id="priorityContainer">
+                    <!-- Will be populated by JS -->
+                </div>
+            </div>
+
             <!-- Full Schedule -->
             <div class="card">
                 <div class="section-title">🗓️ My Full 9-Day Cycle Schedule</div>
@@ -558,7 +719,7 @@
                 <div class="card">
                     <div class="section-title">📝 Homework Tracker</div>
                     <div>
-                        <select id="homeworkSubject">
+                        <select id="homeworkSubject" required>
                             <option value="">-- Select Subject --</option>
                             <option value="Math SN">Math SN</option>
                             <option value="Physics">Physics</option>
@@ -576,7 +737,13 @@
                             <option value="Israel Studies">Israel Studies</option>
                             <option value="Cont. World">Cont. World</option>
                         </select>
-                        <textarea id="homeworkDetails" placeholder="What do you need to do? (pages, exercises, etc.)"></textarea>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label style="width: 100%;">
+                                <span style="display: block; margin-bottom: 5px; font-weight: 500;">Due Date:</span>
+                                <input type="date" id="homeworkDueDate" required>
+                            </label>
+                        </div>
+                        <textarea id="homeworkDetails" placeholder="What do you need to do? (pages, exercises, etc.)" required></textarea>
                         <div style="display: flex; gap: 10px;">
                             <button onclick="addHomework()" style="flex: 1;">Add Homework</button>
                         </div>
@@ -590,7 +757,7 @@
                 <div class="card">
                     <div class="section-title">📊 Upcoming Tests & Quizzes</div>
                     <div>
-                        <select id="testSubject">
+                        <select id="testSubject" required>
                             <option value="">-- Select Subject --</option>
                             <option value="Math SN">Math SN</option>
                             <option value="Physics">Physics</option>
@@ -608,13 +775,21 @@
                             <option value="Israel Studies">Israel Studies</option>
                             <option value="Cont. World">Cont. World</option>
                         </select>
-                        <input type="date" id="testDate" style="margin-bottom: 15px;">
-                        <select id="testType" style="margin-bottom: 15px;">
-                            <option value="Test">Test</option>
-                            <option value="Quiz">Quiz</option>
-                            <option value="Project">Project</option>
-                        </select>
-                        <textarea id="testDetails" placeholder="Additional details (chapters, topics, etc.)"></textarea>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label style="width: 50%;">
+                                <span style="display: block; margin-bottom: 5px; font-weight: 500;">Test Date:</span>
+                                <input type="date" id="testDate" required>
+                            </label>
+                            <label style="width: 50%;">
+                                <span style="display: block; margin-bottom: 5px; font-weight: 500;">Type:</span>
+                                <select id="testType">
+                                    <option value="Test">Test</option>
+                                    <option value="Quiz">Quiz</option>
+                                    <option value="Project">Project</option>
+                                </select>
+                            </label>
+                        </div>
+                        <textarea id="testDetails" placeholder="Additional details (chapters, topics, etc.)" required></textarea>
                         <div style="display: flex; gap: 10px;">
                             <button onclick="addTest()" style="flex: 1;">Add Test/Quiz</button>
                         </div>
@@ -988,14 +1163,29 @@
                 return;
             }
             
+            // Sort by due date (most recent first)
+            homework.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+            
             homework.forEach((item, idx) => {
                 const div = document.createElement('div');
                 div.className = `task-item ${item.completed ? 'task-complete' : ''}`;
+                
+                // Format the due date
+                const dueDate = new Date(item.dueDate);
+                const formattedDate = dueDate.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
                 div.innerHTML = `
                     <input type="checkbox" ${item.completed ? 'checked' : ''} 
                            onchange="toggleHomeworkCompletion(${idx})">
                     <div class="task-content">
-                        <div class="task-subject">${item.subject}</div>
+                        <div class="task-subject">
+                            ${item.subject}
+                            <span class="task-date">Due: ${formattedDate}</span>
+                        </div>
                         <div class="task-details">${item.details}</div>
                     </div>
                     <div class="task-actions">
@@ -1004,14 +1194,18 @@
                 `;
                 container.appendChild(div);
             });
+            
+            // Update priority items
+            updatePriorityItems();
         }
 
         function addHomework() {
             const subject = document.getElementById('homeworkSubject').value;
             const details = document.getElementById('homeworkDetails').value;
+            const dueDate = document.getElementById('homeworkDueDate').value;
             
-            if (!subject || !details) {
-                alert("Please select a subject and enter homework details.");
+            if (!subject || !details || !dueDate) {
+                alert("Please fill in all fields (subject, due date, and details)");
                 return;
             }
             
@@ -1019,6 +1213,7 @@
             homework.push({
                 subject: subject,
                 details: details,
+                dueDate: dueDate,
                 completed: false,
                 created: new Date().toISOString()
             });
@@ -1028,6 +1223,7 @@
             // Clear inputs
             document.getElementById('homeworkSubject').value = "";
             document.getElementById('homeworkDetails').value = "";
+            document.getElementById('homeworkDueDate').value = "";
             
             loadHomework();
         }
@@ -1057,6 +1253,9 @@
                 return;
             }
             
+            // Sort by date (closest first)
+            tests.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
             tests.forEach((item, idx) => {
                 const div = document.createElement('div');
                 div.className = `task-item ${item.completed ? 'task-complete' : ''}`;
@@ -1075,8 +1274,8 @@
                     <div class="task-content">
                         <div class="task-subject">
                             ${item.subject} 
-                            <span class="badge badge-${item.type === 'Test' ? 'danger' : 'warning'}">${item.type}</span>
-                            <span class="badge badge-primary">${formattedDate}</span>
+                            <span class="badge badge-${item.type === 'Test' ? 'danger' : (item.type === 'Project' ? 'primary' : 'warning')}">${item.type}</span>
+                            <span class="task-date">${formattedDate}</span>
                         </div>
                         <div class="task-details">${item.details}</div>
                     </div>
@@ -1086,6 +1285,9 @@
                 `;
                 container.appendChild(div);
             });
+            
+            // Update priority items
+            updatePriorityItems();
         }
 
         function addTest() {
@@ -1094,8 +1296,8 @@
             const type = document.getElementById('testType').value;
             const details = document.getElementById('testDetails').value;
             
-            if (!subject || !date) {
-                alert("Please select a subject and date for the test/quiz.");
+            if (!subject || !date || !details) {
+                alert("Please fill in all fields (subject, date, and details)");
                 return;
             }
             
@@ -1133,52 +1335,82 @@
             localStorage.setItem('eliahou_tests', JSON.stringify(tests));
             loadTests();
         }
-
-        // FAMILY NOTES
-        function loadFamilyNote() {
-            document.getElementById('familyNote').value = localStorage.getItem('eliahou_family_note') || '';
-        }
         
-        function saveFamilyNote() {
-            localStorage.setItem('eliahou_family_note', document.getElementById('familyNote').value);
-            const msg = document.getElementById('savedMsg');
-            msg.style.display = 'inline';
-            setTimeout(() => { msg.style.display = 'none'; }, 2000);
+        // Update priority items (top 5 upcoming deadlines)
+        function updatePriorityItems() {
+            const homework = JSON.parse(localStorage.getItem('eliahou_homework') || "[]");
+            const tests = JSON.parse(localStorage.getItem('eliahou_tests') || "[]");
+            
+            // Combine and filter only uncompleted items
+            let allItems = [
+                ...homework.filter(item => !item.completed).map(item => ({
+                    ...item, 
+                    type: 'homework',
+                    date: item.dueDate
+                })),
+                ...tests.filter(item => !item.completed).map(item => ({
+                    ...item,
+                    type: 'test'
+                }))
+            ];
+            
+            // Sort by date
+            allItems.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Get top 5
+            const priorityItems = allItems.slice(0, 5);
+            
+            const container = document.getElementById('priorityContainer');
+            container.innerHTML = '';
+            
+            if (priorityItems.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #888; padding: 15px;">No upcoming deadlines! 🎉</p>';
+                return;
+            }
+            
+            priorityItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `priority-item ${item.type}`;
+                
+                // Format date
+                const date = new Date(item.date);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                // Calculate days remaining
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const itemDate = new Date(item.date);
+                itemDate.setHours(0, 0, 0, 0);
+                const daysRemaining = Math.ceil((itemDate - today) / (1000 * 60 * 60 * 24));
+                
+                let daysText = "";
+                if (daysRemaining === 0) {
+                    daysText = "Today!";
+                } else if (daysRemaining === 1) {
+                    daysText = "Tomorrow!";
+                } else if (daysRemaining < 0) {
+                    daysText = "Overdue!";
+                } else {
+                    daysText = `In ${daysRemaining} days`;
+                }
+                
+                div.innerHTML = `
+                    <div class="priority-date">${formattedDate}</div>
+                    <div class="priority-content">
+                        <div class="priority-subject">${item.subject}</div>
+                        <div class="priority-details">
+                            ${item.type === 'test' ? item.type : 'Homework'}: ${item.details.substring(0, 60)}${item.details.length > 60 ? '...' : ''}
+                        </div>
+                    </div>
+                    <div class="priority-days">${daysText}</div>
+                `;
+                
+                container.appendChild(div);
+            });
         }
-        
-        // Auto-save family notes
-        document.getElementById('familyNote').addEventListener('input', function() {
-            clearTimeout(window.noteTimeout);
-            window.noteTimeout = setTimeout(saveFamilyNote, 2000);
-        });
 
-        // On page load
-        window.onload = function() {
-            // Create day selector
-            createDaySelector();
-            
-            // Load saved day or default to today's cycle day
-            const savedDay = localStorage.getItem('eliahou_selected_day') || getCurrentCycleDay();
-            document.querySelector(`.day-btn[data-day="${savedDay}"]`).classList.add('active');
-            displayTimetable(savedDay);
-            
-            // Update today's schedule
-            updateTodaySchedule();
-            
-            // Load homework and tests
-            loadHomework();
-            loadTests();
-            
-            // Load family notes
-            loadFamilyNote();
-            
-            // Set today's date in test date input
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('testDate').value = today;
-            
-            // Schedule periodic updates
-            setInterval(updateTodaySchedule, 60000); // Update every minute
-        };
-    </script>
-</body>
-</html>
+        // FAMILY
