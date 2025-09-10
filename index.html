@@ -96,7 +96,7 @@
             background: var(--accent2);
             resize: vertical;
         }
-        button {
+        button, select {
             background: var(--accent);
             color: #fff;
             border: none;
@@ -108,7 +108,7 @@
             margin: 0 3px;
             align-self: flex-start;
         }
-        button:hover {
+        button:hover, select:hover {
             background: #143052;
         }
         button.remove {
@@ -194,6 +194,98 @@
             color: #fff;
             text-decoration: underline;
         }
+        .class-schedule {
+            background: #fff;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .class-schedule th, .class-schedule td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .class-schedule th {
+            background: var(--accent);
+            color: white;
+        }
+        .class-schedule tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .class-schedule tr:hover {
+            background-color: #f1f7ff;
+        }
+        .subject-Math {
+            background-color: #e3f2fd;
+        }
+        .subject-Physics {
+            background-color: #fff9c4;
+        }
+        .subject-Chemistry {
+            background-color: #e8f5e9;
+        }
+        .subject-English {
+            background-color: #f3e5f5;
+        }
+        .subject-Francais {
+            background-color: #ffebee;
+        }
+        .subject-SCG {
+            background-color: #e8f5e9;
+        }
+        .subject-Multimedia {
+            background-color: #e0f7fa;
+        }
+        .subject-Jewish {
+            background-color: #ede7f6;
+        }
+        .subject-Chumash {
+            background-color: #e0e0e0;
+        }
+        .subject-Navi {
+            background-color: #26a69a;
+            color: white;
+        }
+        .subject-Financial {
+            background-color: #bbdefb;
+        }
+        .subject-CCQ {
+            background-color: #c8e6c9;
+        }
+        .subject-PhysEd {
+            background-color: #d7ccc8;
+        }
+        .subject-Israel {
+            background-color: #ffccbc;
+        }
+        .subject-World {
+            background-color: #b3e5fc;
+        }
+        .weather-forecast {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+        }
+        .weather-day {
+            background: var(--accent2);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .weather-date {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .weather-icon {
+            font-size: 24px;
+            margin: 5px 0;
+        }
+        .weather-temp {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -207,32 +299,48 @@
     <div class="calendar-container">
         <div class="calendar-title">📅 My Calendar</div>
         <iframe class="calendar-iframe"
-            src="https://calendar.google.com/calendar/embed?height=800&wkst=1&ctz=America%2FToronto&title=Ha%20Schedule&src=ZWxpYWhvdS5yb2ZmZUBnbWFpbC5jb20&src=ZmFtaWx5MDIyMjY2OTI0NjU5NDI4NTczMjlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZDJhYWMyNTRmMjkzMzYyNDAzNmY1NjgwOWY0OGViNWM5ZDIxMDk1NzVlYjNjOWRjNjZhZDAxMDlhOTI3MWJkZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185cGhzaXAwbWJnNDlwNzcybmtuczk0bWRxc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19hYXV0bWxnMHM3Z2o0aDZsMnJocmVkbmdkc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ18zNjFmbTVjNm0xMmJmaXBvajlsODA2ZHNqc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185bm1tdXJtZnVzY2N1bG9sdW9maTRjNm1rc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19mMWVjbjYzOTJjaDRxNDJ1c2NxczkycWhzMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%23ef6c00&color=%23a79b8e&color=%23b39ddb&color=%23f4511e&color=%23009688&color=%23b39ddb&color=%23d50000&color=%230b8043"
-            width="1500" height="1000" frameborder="0" scrolling="no"
+            src="https://calendar.google.com/calendar/embed?height=850&wkst=1&ctz=America%2FToronto&title=HA%20SCHEDULE%20FOR%20ELIAHOU%20ROFFE&src=ZWxpYWhvdS5yb2ZmZUBnbWFpbC5jb20&src=ZmFtaWx5MDIyMjY2OTI0NjU5NDI4NTczMjlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=aGEtbXRsLm9yZ185cGhzaXAwbWJnNDlwNzcybmtuczk0bWRxc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19hYXV0bWxnMHM3Z2o0aDZsMnJocmVkbmdkc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ18zNjFmbTVjNm0xMmJmaXBvajlsODA2ZHNqc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185bm1tdXJtZnVzY2N1bG9sdW9maTRjNm1rc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19mMWVjbjYzOTJjaDRxNDJ1c2NxczkycWhzMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%23ef6c00&color=%23b39ddb&color=%23f4511e&color=%23009688&color=%23b39ddb&color=%23d50000&color=%230b8043"
+            width="1350" height="850" frameborder="0" scrolling="no"
             style="border:solid 1px #777"></iframe>
     </div>
     <main>
         <!-- Class Schedule -->
-        <div class="card">
-            <div class="section-title">🗓️ Class Schedule</div>
-            <div style="text-align: center; padding: 20px;">
-                <div style="font-size: 1.2em; font-weight: bold; color: var(--accent); margin-bottom: 15px;">
-                    Today's Schedule
+        <div class="card" style="min-width: 100%; max-width: 100%;">
+            <div class="section-title">🗓️ Class Schedule - Grade 11B (2025-26)</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div>
+                    <label for="cycleDay"><strong>Select Cycle Day:</strong></label>
+                    <select id="cycleDay" onchange="updateSchedule()">
+                        <option value="1">Day 1</option>
+                        <option value="2">Day 2</option>
+                        <option value="3">Day 3</option>
+                        <option value="4">Day 4</option>
+                        <option value="5">Day 5</option>
+                        <option value="6">Day 6</option>
+                        <option value="7">Day 7</option>
+                        <option value="8">Day 8</option>
+                        <option value="9">Day 9</option>
+                    </select>
                 </div>
-                <div style="background: var(--accent2); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <div style="font-weight: 600; margin-bottom: 8px;">🔄 Cycle Day: [Placeholder]</div>
-                    <div style="color: #666;">Check your schedule for today's cycle day</div>
+                <div>
+                    <span><strong>Student ID:</strong> 2160</span> | 
+                    <span><strong>Homeroom:</strong> 11B</span>
                 </div>
-                <div style="text-align: left;">
-                    <div style="font-weight: 600; margin-bottom: 10px;">📚 Today's Classes:</div>
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; font-family: monospace;">
-                        <div>Period 1: [Subject Placeholder]</div>
-                        <div>Period 2: [Subject Placeholder]</div>
-                        <div>Period 3: [Subject Placeholder]</div>
-                        <div>Period 4: [Subject Placeholder]</div>
-                        <div>Period 5: [Subject Placeholder]</div>
-                    </div>
-                </div>
+            </div>
+            <div id="scheduleDisplay">
+                <table class="class-schedule">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Time</th>
+                            <th>Subject</th>
+                            <th>Room</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleBody">
+                        <!-- Schedule will be populated by JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -252,6 +360,14 @@
                 <button onclick="addTodo()">➕ Add</button>
             </div>
             <div id="todoList"></div>
+        </div>
+
+        <!-- Weather Widget with 7-day forecast -->
+        <div class="card" style="min-width: 100%; max-width: 100%;">
+            <div class="section-title">🌤️ 7-Day Weather Forecast - Côte Saint-Luc</div>
+            <div id="weather" class="weather-forecast">
+                <!-- Weather forecast will be populated by JavaScript -->
+            </div>
         </div>
 
         <!-- Quick Links -->
@@ -289,21 +405,15 @@
                     ✏️ Grammarly
                 </a>
                 <a href="https://www.hebcal.com/converter/" target="_blank">
-                    📅 Hebrew Calendar
+                    📅 Hebrew Calendar Converter
                 </a>
-                <a href="https://hebrewcalendar.co.il/" target="_blank">
+                <a href="https://hebrewcalendar.co.il/" target="_blank" class="featured">
                     📅 Hebrew Calendar
                 </a>
                 <a href="https://quizlet.com/" target="_blank">
                     🧠 Quizlet
                 </a>
             </div>
-        </div>
-
-        <!-- Weather Widget -->
-        <div class="card">
-            <div class="section-title">🌤️ Weather - Côte Saint-Luc</div>
-            <div id="weather"></div>
         </div>
 
         <!-- Motivational Quote -->
@@ -320,6 +430,120 @@
     <script>
         // Update timestamp
         document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+
+        // Class Schedule Data
+        const classSchedule = {
+            1: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Multimedia", details: "11B 152", room: "152" },
+                { period: 3, time: "11:15 - 12:20", subject: "Physics", details: "11B,11G 051", room: "051" },
+                { period: 4, time: "12:25 - 1:30", subject: "Math SN", details: "11B,11G 160", room: "160" },
+                { period: 5, time: "2:20 - 3:25", subject: "Francais", details: "11B,11G 154", room: "154" },
+                { period: 6, time: "3:35 - 4:40", subject: "Chemistry", details: "11B,11G 052", room: "052" }
+            ],
+            2: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Math SN", details: "11B,11G 160", room: "160" },
+                { period: 3, time: "11:15 - 12:20", subject: "Jewish Lit.", details: "11B 156", room: "156" },
+                { period: 4, time: "12:25 - 1:30", subject: "English", details: "11B,11G 151", room: "151" },
+                { period: 5, time: "2:20 - 3:25", subject: "Financial Ed.", details: "11B 152", room: "152" },
+                { period: 6, time: "3:35 - 4:40", subject: "Phys. Ed.", details: "11B GYM", room: "GYM" }
+            ],
+            3: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Cont. World", details: "11B 154", room: "154" },
+                { period: 3, time: "11:15 - 12:20", subject: "Chemistry", details: "11B,11G 052", room: "052" },
+                { period: 4, time: "12:25 - 1:30", subject: "English", details: "11B,11G 151", room: "151" },
+                { period: 5, time: "2:20 - 3:25", subject: "Francais", details: "11B,11G 154", room: "154" },
+                { period: 6, time: "3:35 - 4:40", subject: "CCQ", details: "11B 160", room: "160" }
+            ],
+            4: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Math SN", details: "11B,11G 160", room: "160" },
+                { period: 3, time: "11:15 - 12:20", subject: "Chumash", details: "11B 156", room: "156" },
+                { period: 4, time: "12:25 - 1:30", subject: "Jewish Lit.", details: "11B 157", room: "157" },
+                { period: 5, time: "2:20 - 3:25", subject: "Physics", details: "11B,11G 051", room: "051" },
+                { period: 6, time: "3:35 - 4:40", subject: "English", details: "11B,11G 151", room: "151" }
+            ],
+            5: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Math SN", details: "11B,11G 160", room: "160" },
+                { period: 3, time: "11:15 - 12:20", subject: "Physics", details: "11B,11G 051", room: "051" },
+                { period: 4, time: "12:25 - 1:30", subject: "Cont. World", details: "11B 154", room: "154" },
+                { period: 5, time: "2:20 - 3:25", subject: "Francais", details: "11B,11G 151", room: "151" },
+                { period: 6, time: "3:35 - 4:40", subject: "CCQ", details: "11B 152", room: "152" }
+            ],
+            6: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Chemistry", details: "11B,11G 052", room: "052" },
+                { period: 3, time: "11:15 - 12:20", subject: "Francais", details: "11B,11G 154", room: "154" },
+                { period: 4, time: "12:25 - 1:30", subject: "Chumash", details: "11B 156", room: "156" },
+                { period: 5, time: "2:20 - 3:25", subject: "Math SN", details: "11B,11G 160", room: "160" },
+                { period: 6, time: "3:35 - 4:40", subject: "English", details: "11B,11G 151", room: "151" }
+            ],
+            7: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Multimedia", details: "11B 151", room: "151" },
+                { period: 3, time: "11:15 - 12:20", subject: "Navi", details: "11B JMPR", room: "JMPR" },
+                { period: 4, time: "12:25 - 1:30", subject: "Math SN", details: "11B,11G 160", room: "160" },
+                { period: 5, time: "2:20 - 3:25", subject: "Chemistry", details: "11B,11G 052", room: "052" },
+                { period: 6, time: "3:35 - 4:40", subject: "Phys. Ed.", details: "11B GYM", room: "GYM" }
+            ],
+            8: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Francais", details: "11B,11G 154", room: "154" },
+                { period: 3, time: "11:15 - 12:20", subject: "Chumash", details: "11B 156", room: "156" },
+                { period: 4, time: "12:25 - 1:30", subject: "English", details: "11B,11G 151", room: "151" },
+                { period: 5, time: "2:20 - 3:25", subject: "Physics", details: "11B,11G 051", room: "051" },
+                { period: 6, time: "3:35 - 4:40", subject: "Israel Studies", details: "11B 156", room: "156" }
+            ],
+            9: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Physics", details: "11B,11G 051", room: "051" },
+                { period: 3, time: "11:15 - 12:20", subject: "Navi", details: "11B JMPR", room: "JMPR" },
+                { period: 4, time: "12:25 - 1:30", subject: "Financial Ed.", details: "11B 152", room: "152" },
+                { period: 5, time: "2:20 - 3:25", subject: "Chemistry", details: "11B,11G 052", room: "052" },
+                { period: 6, time: "3:35 - 4:40", subject: "English", details: "11B,11G 151", room: "151" }
+            ]
+        };
+
+        // Function to update schedule display based on selected cycle day
+        function updateSchedule() {
+            const cycleDay = document.getElementById('cycleDay').value;
+            const scheduleBody = document.getElementById('scheduleBody');
+            
+            // Clear existing schedule
+            scheduleBody.innerHTML = '';
+            
+            // Get schedule for selected day
+            const daySchedule = classSchedule[cycleDay];
+            
+            // Populate schedule
+            daySchedule.forEach(cls => {
+                const row = document.createElement('tr');
+                // Add class for styling based on subject
+                const subjectClass = cls.subject.includes(' ') ? 
+                    'subject-' + cls.subject.split(' ')[0] : 
+                    'subject-' + cls.subject;
+                
+                row.className = subjectClass;
+                
+                row.innerHTML = `
+                    <td>${cls.period}</td>
+                    <td>${cls.time}</td>
+                    <td><strong>${cls.subject}</strong></td>
+                    <td>${cls.room}</td>
+                `;
+                scheduleBody.appendChild(row);
+            });
+            
+            // Save selected cycle day to localStorage
+            localStorage.setItem('eliahou_cycle_day', cycleDay);
+        }
+
+        // Set cycle day from localStorage if available
+        document.getElementById('cycleDay').value = localStorage.getItem('eliahou_cycle_day') || '1';
+        updateSchedule();
 
         // NOTES (persistent per browser)
         function loadNote() {
@@ -394,40 +618,50 @@
         window.removeTodo = removeTodo;
         loadTodos();
 
-        // WEATHER (Open-Meteo API, Côte Saint-Luc)
+        // 7-DAY WEATHER FORECAST (Open-Meteo API, Côte Saint-Luc)
         function loadWeather() {
-            fetch('https://api.open-meteo.com/v1/forecast?latitude=45.4975&longitude=-73.6658&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=America/Toronto&forecast_days=3')
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=45.4975&longitude=-73.6658&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=America%2FToronto')
                 .then(res => res.json())
                 .then(data => {
-                    const current = data.current_weather;
-                    const today = data.daily;
+                    const daily = data.daily;
+                    const container = document.getElementById('weather');
+                    container.innerHTML = '';
                     
-                    const weatherIcon = current.weathercode === 0 ? '☀️' : 
-                                       current.weathercode <= 3 ? '⛅' : '🌧️';
+                    // Get weather icon based on code
+                    function getWeatherIcon(code) {
+                        if (code === 0) return '☀️'; // Clear sky
+                        if (code <= 3) return '⛅'; // Partly cloudy
+                        if (code <= 48) return '☁️'; // Cloudy
+                        if (code <= 57) return '🌧️'; // Drizzle
+                        if (code <= 67) return '🌧️'; // Rain
+                        if (code <= 77) return '❄️'; // Snow
+                        if (code <= 82) return '🌧️'; // Rain showers
+                        if (code <= 86) return '❄️'; // Snow showers
+                        return '⛈️'; // Thunderstorm
+                    }
                     
-                    document.getElementById('weather').innerHTML = `
-                        <div style="text-align: center; padding: 10px;">
-                            <div style="font-size: 2em; margin-bottom: 10px;">${weatherIcon}</div>
-                            <div style="font-size: 1.5em; font-weight: bold; color: var(--accent);">
-                                ${Math.round(current.temperature)}°C
-                            </div>
-                            <div style="margin: 5px 0;">
-                                💨 ${current.windspeed} km/h
-                            </div>
-                            <div style="font-size: 0.9em; color: #666;">
-                                High: ${Math.round(today.temperature_2m_max[0])}° | 
-                                Low: ${Math.round(today.temperature_2m_min[0])}°
-                            </div>
-                            ${today.precipitation_sum[0] > 0 ? 
-                                `<div style="color: #059669; margin-top: 5px;">🌧️ ${today.precipitation_sum[0]}mm expected</div>` : 
-                                '<div style="color: #059669; margin-top: 5px;">☀️ No rain expected</div>'
-                            }
-                        </div>
-                    `;
+                    // Format date: "Mon, Sep 10"
+                    function formatDate(dateStr) {
+                        const date = new Date(dateStr);
+                        return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                    }
+                    
+                    // Create a card for each day
+                    for (let i = 0; i < 7; i++) {
+                        const dayCard = document.createElement('div');
+                        dayCard.className = 'weather-day';
+                        dayCard.innerHTML = `
+                            <div class="weather-date">${formatDate(daily.time[i])}</div>
+                            <div class="weather-icon">${getWeatherIcon(daily.weathercode[i])}</div>
+                            <div class="weather-temp">${Math.round(daily.temperature_2m_max[i])}°C / ${Math.round(daily.temperature_2m_min[i])}°C</div>
+                            <div>${daily.precipitation_sum[i] > 0 ? `🌧️ ${daily.precipitation_sum[i]}mm` : ''}</div>
+                        `;
+                        container.appendChild(dayCard);
+                    }
                 })
                 .catch(() => {
                     document.getElementById('weather').innerHTML = 
-                        '<div style="text-align: center; color: #d33;">⚠️ Weather unavailable</div>';
+                        '<div style="text-align: center; color: #d33; padding: 20px;">⚠️ Weather forecast unavailable</div>';
                 });
         }
         loadWeather();
