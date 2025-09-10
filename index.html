@@ -2,333 +2,805 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hebrew Academy Schedule for Eliahou Roffe</title>
+    <title>Hebrew Academy Dashboard - Eliahou Roffe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-bg: #f4f6fa;
+            --main-bg: #f8f9fc;
             --card-bg: #fff;
-            --accent: #205081;
-            --accent2: #e9effa;
-            --border: #dde3ec;
-            --shadow: 0 2px 8px #0001;
-            --rounded: 12px;
+            --accent: #3b5998;
+            --accent-light: #e9effa;
+            --accent-hover: #2d4373;
+            --border: #e0e5ec;
+            --text: #333;
+            --text-light: #666;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --rounded: 16px;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         body {
             background: var(--main-bg);
             margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: #222;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            line-height: 1.6;
         }
-        header, footer {
+        header {
             background: var(--accent);
             color: #fff;
-            padding: 1em 0;
-            text-align: center;
+            padding: 1.2em 1.5em;
             box-shadow: var(--shadow);
         }
-        .header-content {
+        .header-container {
+            max-width: 1500px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 20px;
+        }
+        .hebrew-text {
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        .current-time {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         .school-logo {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: white;
             padding: 5px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         .header-title {
-            font-size: 1.5em;
-            font-weight: bold;
+            font-size: 1.4em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
         }
         main {
             flex: 1;
-            max-width: 1400px;
-            margin: 30px auto 16px auto;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 24px;
-            justify-content: center;
         }
         .card {
             background: var(--card-bg);
             border-radius: var(--rounded);
             box-shadow: var(--shadow);
-            padding: 1.2em 1.5em;
+            padding: 1.5em;
             margin-bottom: 20px;
-            min-width: 320px;
-            flex: 1 1 340px;
-            max-width: 420px;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
+            overflow: hidden;
         }
+        .section-title {
+            color: var(--accent);
+            margin-bottom: 1em;
+            font-size: 1.3em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title i {
+            font-size: 1.2em;
+        }
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        }
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        .badge-primary {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+        .badge-success {
+            background: #e6f7f0;
+            color: var(--success);
+        }
+        .badge-warning {
+            background: #fef5e7;
+            color: var(--warning);
+        }
+        .badge-danger {
+            background: #fee7e7;
+            color: var(--danger);
+        }
+        
+        /* Current Schedule Status */
+        .current-status {
+            background: linear-gradient(135deg, #3b5998, #2d4373);
+            color: white;
+            padding: 20px;
+            border-radius: var(--rounded);
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+        .current-status-info h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+        .current-status-info p {
+            opacity: 0.9;
+            margin: 0;
+            font-size: 0.95em;
+        }
+        .current-day {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: var(--rounded);
+            text-align: center;
+        }
+        .current-day .day-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .current-day .day-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        /* Calendar */
         .calendar-iframe {
             width: 100%;
             border-radius: var(--rounded);
             box-shadow: var(--shadow);
-            min-height: 350px;
+            height: 400px;
             background: #eee;
+            border: none;
         }
-        .section-title {
-            color: var(--accent);
-            margin-bottom: .5em;
-            font-size: 1.2em;
-            font-weight: 600;
+        
+        /* Class Schedule */
+        .schedule-container {
+            overflow-x: auto;
+        }
+        .class-schedule {
+            border-collapse: collapse;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: var(--rounded);
+            overflow: hidden;
+        }
+        .class-schedule th, .class-schedule td {
+            padding: 12px 15px;
             text-align: left;
         }
-        textarea, input[type="text"] {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            border-radius: 6px;
+        .class-schedule th {
+            background: var(--accent);
+            color: white;
+            font-weight: 500;
+        }
+        .class-schedule td {
+            border-bottom: 1px solid var(--border);
+        }
+        .class-schedule tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .class-schedule tr:nth-child(even) {
+            background-color: #f9fafc;
+        }
+        .class-schedule tr:hover {
+            background-color: var(--accent-light);
+        }
+        .class-schedule .current {
+            background: #e6f7f0;
+            position: relative;
+        }
+        .class-schedule .current::before {
+            content: "▶";
+            position: absolute;
+            left: 5px;
+            color: var(--success);
+        }
+        .class-schedule .next {
+            background: #fef5e7;
+            position: relative;
+        }
+        .class-schedule .next::before {
+            content: "◯";
+            position: absolute;
+            left: 5px;
+            color: var(--warning);
+        }
+        
+        .subject-Math { background-color: #e3f2fd; }
+        .subject-Physics { background-color: #fff9c4; }
+        .subject-Chemistry { background-color: #e8f5e9; }
+        .subject-English { background-color: #f3e5f5; }
+        .subject-Francais { background-color: #ffebee; }
+        .subject-SCG { background-color: #e8f5e9; }
+        .subject-Multimedia { background-color: #e0f7fa; }
+        .subject-Jewish { background-color: #ede7f6; }
+        .subject-Chumash { background-color: #e0e0e0; }
+        .subject-Navi { background-color: #26a69a; color: white; }
+        .subject-Financial { background-color: #bbdefb; }
+        .subject-CCQ { background-color: #c8e6c9; }
+        .subject-PhysEd { background-color: #d7ccc8; }
+        .subject-Israel { background-color: #ffccbc; }
+        .subject-World { background-color: #b3e5fc; }
+        
+        /* Day Selection */
+        .day-selector {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .day-btn {
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            margin-bottom: 10px;
-            font-size: 1em;
-            background: var(--accent2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .day-btn:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+        }
+        .day-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        /* Forms */
+        textarea, input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            font-family: inherit;
+            background: #fcfcfc;
+        }
+        textarea {
+            min-height: 100px;
             resize: vertical;
         }
-        button, select {
+        button {
             background: var(--accent);
             color: #fff;
             border: none;
-            padding: 0.5em 1.2em;
-            border-radius: 6px;
-            font-size: 1em;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 500;
             cursor: pointer;
             transition: background 0.2s;
-            margin: 0 3px;
-            align-self: flex-start;
+            font-family: inherit;
         }
-        button:hover, select:hover {
-            background: #143052;
+        button:hover {
+            background: var(--accent-hover);
         }
-        button.remove {
-            background: #d33;
+        button.danger {
+            background: var(--danger);
         }
-        button.remove:hover {
-            background: #a00;
+        button.danger:hover {
+            background: #dc2626;
         }
-        ul, ol {
-            padding-left: 20px;
+        button.small {
+            padding: 5px 10px;
+            font-size: 0.85em;
         }
-        .todo-completed {
+        
+        /* Task lists */
+        .task-list {
+            margin-top: 20px;
+        }
+        .task-item {
+            background: #fcfcfc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .task-content {
+            flex: 1;
+        }
+        .task-subject {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .task-details {
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .task-complete {
             text-decoration: line-through;
-            color: #888;
+            opacity: 0.65;
         }
-        .note-saved {
-            color: green;
-            font-size: 0.95em;
-            margin-left: 10px;
-        }
+        
+        /* Quick Links */
         .quick-links {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
         }
         .quick-links a {
             display: block;
             color: white;
             text-decoration: none;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 12px;
             font-weight: 500;
             text-align: center;
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, var(--accent), #2563eb);
+            transition: all 0.3s;
+            background: linear-gradient(135deg, var(--accent), #4267B2);
         }
         .quick-links a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
         .quick-links a.featured {
-            background: linear-gradient(135deg, #059669, #10b981);
+            background: linear-gradient(135deg, #10b981, #059669);
             font-weight: 600;
-            border: 2px solid #34d399;
         }
-        .quick-links a.school {
+        .quick-links a.hebrew-cal {
+            grid-column: 1 / -1;
             background: linear-gradient(135deg, #7c3aed, #8b5cf6);
-        }
-        @media (max-width: 1000px) {
-            main { flex-direction: column; align-items: center; }
-            .card { max-width: 98vw; }
-            .header-content { flex-direction: column; }
-            .quick-links { grid-template-columns: repeat(2, 1fr); }
-        }
-        .todo-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 7px;
-        }
-        .todo-row input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        .todo-row .remove {
-            margin-left: auto;
-        }
-        .calendar-container {
-            width: 100%;
-            max-width: 1500px;
-            margin: 0 auto 30px auto;
-            background: #fff;
-            border-radius: var(--rounded);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-        .calendar-title {
-            color: var(--accent);
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-weight: 600;
-            margin: 20px 0 5px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .current-status {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .current-day {
+                width: 100px;
+                margin: 0 auto;
+            }
+        }
+        
+        footer {
+            background: var(--accent);
+            color: #fff;
+            padding: 1.2em;
             text-align: center;
+            margin-top: 30px;
         }
         footer a {
-            color: #fff;
+            color: white;
             text-decoration: underline;
         }
-        .class-schedule {
-            background: #fff;
-            border-collapse: collapse;
+        
+        /* Schedule timetable based on the image */
+        .timetable {
             width: 100%;
-            margin-top: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            border-collapse: collapse;
+            box-shadow: var(--shadow);
+            border-radius: var(--rounded);
             overflow: hidden;
+            background: white;
         }
-        .class-schedule th, .class-schedule td {
+        .timetable th, .timetable td {
+            border: 1px solid #ddd;
             padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
+            text-align: center;
+            position: relative;
         }
-        .class-schedule th {
+        .timetable th {
             background: var(--accent);
             color: white;
+            font-weight: 500;
         }
-        .class-schedule tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .timetable .time-col {
+            background: #f5f5f5;
+            font-weight: 500;
+            text-align: right;
+            width: 110px;
         }
-        .class-schedule tr:hover {
-            background-color: #f1f7ff;
+        .timetable .current-cell {
+            position: relative;
         }
-        .subject-Math {
-            background-color: #e3f2fd;
-        }
-        .subject-Physics {
-            background-color: #fff9c4;
-        }
-        .subject-Chemistry {
-            background-color: #e8f5e9;
-        }
-        .subject-English {
-            background-color: #f3e5f5;
-        }
-        .subject-Francais {
-            background-color: #ffebee;
-        }
-        .subject-SCG {
-            background-color: #e8f5e9;
-        }
-        .subject-Multimedia {
-            background-color: #e0f7fa;
-        }
-        .subject-Jewish {
-            background-color: #ede7f6;
-        }
-        .subject-Chumash {
-            background-color: #e0e0e0;
-        }
-        .subject-Navi {
-            background-color: #26a69a;
+        .timetable .current-cell::after {
+            content: "Now";
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            background: var(--success);
             color: white;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 10px;
         }
-        .subject-Financial {
-            background-color: #bbdefb;
+        .timetable .next-cell {
+            position: relative;
         }
-        .subject-CCQ {
-            background-color: #c8e6c9;
-        }
-        .subject-PhysEd {
-            background-color: #d7ccc8;
-        }
-        .subject-Israel {
-            background-color: #ffccbc;
-        }
-        .subject-World {
-            background-color: #b3e5fc;
-        }
-        .weather-forecast {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 10px;
-        }
-        .weather-day {
-            background: var(--accent2);
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .weather-date {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .weather-icon {
-            font-size: 24px;
-            margin: 5px 0;
-        }
-        .weather-temp {
-            font-weight: bold;
+        .timetable .next-cell::after {
+            content: "Next";
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            background: var(--warning);
+            color: white;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTY-bpmh7OKcza-75E7tWRkmesz9fXooV2TVZHwCBLgup0UYzcHLNeuWd8oypL_HE_73LIFfMPHiBWF85qwbhdljf6SvqlTTdsgdMtaHZc" 
-                 alt="Hebrew Academy Logo" class="school-logo">
-            <span class="header-title">Hebrew Academy Schedule for Eliahou Roffe</span>
+        <div class="header-container">
+            <div class="current-time" id="currentTime">
+                Loading time...
+            </div>
+            <div class="header-center">
+                <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTY-bpmh7OKcza-75E7tWRkmesz9fXooV2TVZHwCBLgup0UYzcHLNeuWd8oypL_HE_73LIFfMPHiBWF85qwbhdljf6SvqlTTdsgdMtaHZc" 
+                     alt="Hebrew Academy Logo" class="school-logo">
+                <h1 class="header-title">Hebrew Academy Dashboard - Eliahou Roffe</h1>
+            </div>
+            <div class="hebrew-text">בסיעתא דשמיא</div>
         </div>
     </header>
-    <div class="calendar-container">
-        <div class="calendar-title">📅 My Calendar</div>
-        <iframe class="calendar-iframe"
-            src="https://calendar.google.com/calendar/embed?height=850&wkst=1&ctz=America%2FToronto&title=HA%20SCHEDULE%20FOR%20ELIAHOU%20ROFFE&src=ZWxpYWhvdS5yb2ZmZUBnbWFpbC5jb20&src=ZmFtaWx5MDIyMjY2OTI0NjU5NDI4NTczMjlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=aGEtbXRsLm9yZ185cGhzaXAwbWJnNDlwNzcybmtuczk0bWRxc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19hYXV0bWxnMHM3Z2o0aDZsMnJocmVkbmdkc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ18zNjFmbTVjNm0xMmJmaXBvajlsODA2ZHNqc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ185bm1tdXJtZnVzY2N1bG9sdW9maTRjNm1rc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aGEtbXRsLm9yZ19mMWVjbjYzOTJjaDRxNDJ1c2NxczkycWhzMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%23ef6c00&color=%23b39ddb&color=%23f4511e&color=%23009688&color=%23b39ddb&color=%23d50000&color=%230b8043"
-            width="1350" height="850" frameborder="0" scrolling="no"
-            style="border:solid 1px #777"></iframe>
-    </div>
-    <main>
-        <!-- Class Schedule -->
-        <div class="card" style="min-width: 100%; max-width: 100%;">
-            <div class="section-title">🗓️ Class Schedule - Grade 11B (2025-26)</div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <div>
-                    <label for="cycleDay"><strong>Select Cycle Day:</strong></label>
-                    <select id="cycleDay" onchange="updateSchedule()">
-                        <option value="1">Day 1</option>
-                        <option value="2">Day 2</option>
-                        <option value="3">Day 3</option>
-                        <option value="4">Day 4</option>
-                        <option value="5">Day 5</option>
-                        <option value="6">Day 6</option>
-                        <option value="7">Day 7</option>
-                        <option value="8">Day 8</option>
-                        <option value="9">Day 9</option>
-                    </select>
+
+    <div class="container">
+        <main>
+            <!-- Current Status -->
+            <div class="current-status">
+                <div class="current-status-info">
+                    <h2 id="currentClass">Loading current class...</h2>
+                    <p id="nextClass">Loading next class...</p>
                 </div>
-                <div>
-                    <span><strong>Student ID:</strong> 2160</span> | 
-                    <span><strong>Homeroom:</strong> 11B</span>
+                <div class="current-day">
+                    <div class="day-number" id="cycleNumber">-</div>
+                    <div class="day-label">Cycle Day</div>
                 </div>
             </div>
-            <div id="scheduleDisplay">
-                <table class="class-schedule">
+            
+            <!-- Full Schedule -->
+            <div class="card">
+                <div class="section-title">🗓️ My Full 9-Day Cycle Schedule</div>
+                <div class="day-selector" id="daySelector">
+                    <!-- Day buttons will be added by JS -->
+                </div>
+                <div class="schedule-container">
+                    <img src="https://github.com/elitexpress/calendar/raw/d1ed7325df10f368e8798e52f788d71420d84f85/schedule.png" 
+                         alt="Complete Schedule" 
+                         style="width:100%; max-width:100%; display:none;" 
+                         id="scheduleImage">
+                    <div class="timetable-container" id="timetableContainer"></div>
+                </div>
+            </div>
+
+            <!-- Google Calendar -->
+            <div class="card">
+                <div class="section-title">📅 My Calendar</div>
+                <iframe class="calendar-iframe"
+                    src="https://calendar.google.com/calendar/embed?height=400&wkst=1&ctz=America%2FToronto&title=HA%20SCHEDULE%20FOR%20ELIAHOU%20ROFFE&src=ZWxpYWhvdS5yb2ZmZUBnbWFpbC5jb20"
+                    width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- Today's Classes -->
+            <div class="card">
+                <div class="section-title">📚 Today's Classes</div>
+                <div class="schedule-container">
+                    <table class="class-schedule">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Time</th>
+                                <th>Subject</th>
+                                <th>Room</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="todayScheduleBody">
+                            <!-- Will be populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <!-- Homework Section -->
+                <div class="card">
+                    <div class="section-title">📝 Homework Tracker</div>
+                    <div>
+                        <select id="homeworkSubject">
+                            <option value="">-- Select Subject --</option>
+                            <option value="Math SN">Math SN</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="English">English</option>
+                            <option value="Francais">Français</option>
+                            <option value="SCG">SCG</option>
+                            <option value="Multimedia">Multimedia</option>
+                            <option value="Jewish Lit.">Jewish Lit.</option>
+                            <option value="Chumash">Chumash</option>
+                            <option value="Navi">Navi</option>
+                            <option value="Financial Ed.">Financial Ed.</option>
+                            <option value="CCQ">CCQ</option>
+                            <option value="Phys. Ed.">Phys. Ed.</option>
+                            <option value="Israel Studies">Israel Studies</option>
+                            <option value="Cont. World">Cont. World</option>
+                        </select>
+                        <textarea id="homeworkDetails" placeholder="What do you need to do? (pages, exercises, etc.)"></textarea>
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="addHomework()" style="flex: 1;">Add Homework</button>
+                        </div>
+                    </div>
+                    <div class="task-list" id="homeworkList">
+                        <!-- Homework items will appear here -->
+                    </div>
+                </div>
+
+                <!-- Tests and Quizzes -->
+                <div class="card">
+                    <div class="section-title">📊 Upcoming Tests & Quizzes</div>
+                    <div>
+                        <select id="testSubject">
+                            <option value="">-- Select Subject --</option>
+                            <option value="Math SN">Math SN</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="English">English</option>
+                            <option value="Francais">Français</option>
+                            <option value="SCG">SCG</option>
+                            <option value="Multimedia">Multimedia</option>
+                            <option value="Jewish Lit.">Jewish Lit.</option>
+                            <option value="Chumash">Chumash</option>
+                            <option value="Navi">Navi</option>
+                            <option value="Financial Ed.">Financial Ed.</option>
+                            <option value="CCQ">CCQ</option>
+                            <option value="Phys. Ed.">Phys. Ed.</option>
+                            <option value="Israel Studies">Israel Studies</option>
+                            <option value="Cont. World">Cont. World</option>
+                        </select>
+                        <input type="date" id="testDate" style="margin-bottom: 15px;">
+                        <select id="testType" style="margin-bottom: 15px;">
+                            <option value="Test">Test</option>
+                            <option value="Quiz">Quiz</option>
+                            <option value="Project">Project</option>
+                        </select>
+                        <textarea id="testDetails" placeholder="Additional details (chapters, topics, etc.)"></textarea>
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="addTest()" style="flex: 1;">Add Test/Quiz</button>
+                        </div>
+                    </div>
+                    <div class="task-list" id="testsList">
+                        <!-- Test items will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Notes -->
+            <div class="card">
+                <div class="section-title">👨‍👩‍👧‍👦 Family Notes</div>
+                <textarea id="familyNote" placeholder="Share notes with family members..."></textarea>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button onclick="saveFamilyNote()">💾 Save Note</button>
+                    <span class="note-saved" id="savedMsg" style="display:none;">✅ Saved!</span>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="card">
+                <div class="section-title">🔗 Quick Links & Resources</div>
+                <div class="quick-links">
+                    <a href="https://hebrewcalendar.co.il/" target="_blank" class="hebrew-cal">
+                        📅 Hebrew Calendar
+                    </a>
+                    <a href="https://www.alloprof.qc.ca/" target="_blank" class="featured">
+                        📚 Alloprof
+                    </a>
+                    <a href="https://ha-mtl.org/myha/" target="_blank">
+                        🏫 MyHA Portal
+                    </a>
+                    <a href="https://classroom.google.com/" target="_blank">
+                        📖 Google Classroom
+                    </a>
+                    <a href="https://mail.google.com/" target="_blank">
+                        📧 Gmail
+                    </a>
+                    <a href="https://drive.google.com/" target="_blank">
+                        💾 Google Drive
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank">
+                        📺 YouTube
+                    </a>
+                    <a href="https://www.khanacademy.org/" target="_blank">
+                        🎓 Khan Academy
+                    </a>
+                    <a href="https://www.wolframalpha.com/" target="_blank">
+                        🧮 Wolfram Alpha
+                    </a>
+                    <a href="https://translate.google.com/" target="_blank">
+                        🌐 Google Translate
+                    </a>
+                    <a href="https://www.grammarly.com/" target="_blank">
+                        ✏️ Grammarly
+                    </a>
+                    <a href="https://quizlet.com/" target="_blank">
+                        🧠 Quizlet
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <span>📞 Contact: <a href="mailto:eliahou.roffe@students.ha-mtl.org">eliahou.roffe@students.ha-mtl.org</a></span>
+        <br>
+        <span style="font-size: 0.9em; opacity: 0.8;">Hebrew Academy Dashboard | Student ID: 2160 | Homeroom: 11B</span>
+    </footer>
+
+    <script>
+        // Update current time continuously
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').innerText = now.toLocaleTimeString();
+            setTimeout(updateTime, 1000);
+        }
+        updateTime();
+        
+        // Class Schedule Data from the image
+        const classSchedule = {
+            1: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Multimedia", room: "11B 152" },
+                { period: 3, time: "11:15 - 12:20", subject: "Physics", room: "11B,11G 051" },
+                { period: 4, time: "12:25 - 1:30", subject: "Math SN", room: "11B,11G 160" },
+                { period: 5, time: "2:20 - 3:25", subject: "Francais", room: "11B,11G 154" },
+                { period: 6, time: "3:35 - 4:40", subject: "Chemistry", room: "11B,11G 052" }
+            ],
+            2: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Math SN", room: "11B,11G 160" },
+                { period: 3, time: "11:15 - 12:20", subject: "Jewish Lit.", room: "11B 156" },
+                { period: 4, time: "12:25 - 1:30", subject: "English", room: "11B,11G 151" },
+                { period: 5, time: "2:20 - 3:25", subject: "Financial Ed.", room: "11B 152" },
+                { period: 6, time: "3:35 - 4:40", subject: "Phys. Ed.", room: "11B GYM" }
+            ],
+            3: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Cont. World", room: "11B 154" },
+                { period: 3, time: "11:15 - 12:20", subject: "Chemistry", room: "11B,11G 052" },
+                { period: 4, time: "12:25 - 1:30", subject: "English", room: "11B,11G 151" },
+                { period: 5, time: "2:20 - 3:25", subject: "Francais", room: "11B,11G 154" },
+                { period: 6, time: "3:35 - 4:40", subject: "CCQ", room: "11B 160" }
+            ],
+            4: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Math SN", room: "11B,11G 160" },
+                { period: 3, time: "11:15 - 12:20", subject: "Chumash", room: "11B 156" },
+                { period: 4, time: "12:25 - 1:30", subject: "Jewish Lit.", room: "11B 157" },
+                { period: 5, time: "2:20 - 3:25", subject: "Physics", room: "11B,11G 051" },
+                { period: 6, time: "3:35 - 4:40", subject: "English", room: "11B,11G 151" }
+            ],
+            5: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Math SN", room: "11B,11G 160" },
+                { period: 3, time: "11:15 - 12:20", subject: "Physics", room: "11B,11G 051" },
+                { period: 4, time: "12:25 - 1:30", subject: "Cont. World", room: "11B 154" },
+                { period: 5, time: "2:20 - 3:25", subject: "Francais", room: "11B,11G 151" },
+                { period: 6, time: "3:35 - 4:40", subject: "CCQ", room: "11B 152" }
+            ],
+            6: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Chemistry", room: "11B,11G 052" },
+                { period: 3, time: "11:15 - 12:20", subject: "Francais", room: "11B,11G 154" },
+                { period: 4, time: "12:25 - 1:30", subject: "Chumash", room: "11B 156" },
+                { period: 5, time: "2:20 - 3:25", subject: "Math SN", room: "11B,11G 160" },
+                { period: 6, time: "3:35 - 4:40", subject: "English", room: "11B,11G 151" }
+            ],
+            7: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Multimedia", room: "11B 151" },
+                { period: 3, time: "11:15 - 12:20", subject: "Navi", room: "11B JMPR" },
+                { period: 4, time: "12:25 - 1:30", subject: "Math SN", room: "11B,11G 160" },
+                { period: 5, time: "2:20 - 3:25", subject: "Chemistry", room: "11B,11G 052" },
+                { period: 6, time: "3:35 - 4:40", subject: "Phys. Ed.", room: "11B GYM" }
+            ],
+            8: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Francais", room: "11B,11G 154" },
+                { period: 3, time: "11:15 - 12:20", subject: "Chumash", room: "11B 156" },
+                { period: 4, time: "12:25 - 1:30", subject: "English", room: "11B,11G 151" },
+                { period: 5, time: "2:20 - 3:25", subject: "Physics", room: "11B,11G 051" },
+                { period: 6, time: "3:35 - 4:40", subject: "Israel Studies", room: "11B 156" }
+            ],
+            9: [
+                { period: 1, time: "8:50 - 9:55", subject: "SCG", room: "11B JMPR" },
+                { period: 2, time: "10:00 - 11:05", subject: "Physics", room: "11B,11G 051" },
+                { period: 3, time: "11:15 - 12:20", subject: "Navi", room: "11B JMPR" },
+                { period: 4, time: "12:25 - 1:30", subject: "Financial Ed.", room: "11B 152" },
+                { period: 5, time: "2:20 - 3:25", subject: "Chemistry", room: "11B,11G 052" },
+                { period: 6, time: "3:35 - 4:40", subject: "English", room: "11B,11G 151" }
+            ]
+        };
+        
+        // Create day selector buttons
+        function createDaySelector() {
+            const container = document.getElementById('daySelector');
+            for (let i = 1; i <= 9; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'day-btn';
+                btn.textContent = `Day ${i}`;
+                btn.setAttribute('data-day', i);
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Update timetable
+                    displayTimetable(i);
+                    // Save selected day
+                    localStorage.setItem('eliahou_selected_day', i);
+                });
+                container.appendChild(btn);
+            }
+        }
+        
+        // Display full timetable for selected day
+        function displayTimetable(day) {
+            const container = document.getElementById('timetableContainer');
+            const schedule = classSchedule[day];
+            
+            // Create the timetable
+            let html = `
+                <table class="timetable">
                     <thead>
                         <tr>
                             <th>Period</th>
@@ -337,370 +809,376 @@
                             <th>Room</th>
                         </tr>
                     </thead>
-                    <tbody id="scheduleBody">
-                        <!-- Schedule will be populated by JavaScript -->
+                    <tbody>
+            `;
+            
+            // Add rows for each period
+            schedule.forEach(period => {
+                const subjectClass = period.subject.includes(' ') ? 
+                    'subject-' + period.subject.split(' ')[0] : 
+                    'subject-' + period.subject;
+                
+                html += `
+                    <tr class="${subjectClass}" id="period-${period.period}">
+                        <td>${period.period}</td>
+                        <td>${period.time}</td>
+                        <td><strong>${period.subject}</strong></td>
+                        <td>${period.room}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
                     </tbody>
                 </table>
-            </div>
-        </div>
-
-        <!-- Notes -->
-        <div class="card">
-            <div class="section-title">📝 Family Notes</div>
-            <textarea id="note" placeholder="Share notes with family members..."></textarea>
-            <button onclick="saveNote()">💾 Save Note</button>
-            <span class="note-saved" id="savedMsg" style="display:none;">✅ Saved!</span>
-        </div>
-
-        <!-- To-Do List -->
-        <div class="card">
-            <div class="section-title">✅ To-Do List</div>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <input type="text" id="todoInput" placeholder="Add a new task...">
-                <button onclick="addTodo()">➕ Add</button>
-            </div>
-            <div id="todoList"></div>
-        </div>
-
-        <!-- Weather Widget with 7-day forecast -->
-        <div class="card" style="min-width: 100%; max-width: 100%;">
-            <div class="section-title">🌤️ 7-Day Weather Forecast - Côte Saint-Luc</div>
-            <div id="weather" class="weather-forecast">
-                <!-- Weather forecast will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="card" style="min-width: 100%; max-width: 100%;">
-            <div class="section-title">🔗 Quick Links & Study Resources</div>
-            <div class="quick-links">
-                <a href="https://www.alloprof.qc.ca/" target="_blank" class="featured">
-                    📚 Alloprof
-                </a>
-                <a href="https://ha-mtl.org/myha/" target="_blank" class="school">
-                    🏫 MyHA Portal
-                </a>
-                <a href="https://classroom.google.com/" target="_blank">
-                    📖 Google Classroom
-                </a>
-                <a href="https://mail.google.com/" target="_blank">
-                    📧 Gmail
-                </a>
-                <a href="https://drive.google.com/" target="_blank">
-                    💾 Google Drive
-                </a>
-                <a href="https://www.youtube.com/" target="_blank">
-                    📺 YouTube
-                </a>
-                <a href="https://www.khanacademy.org/" target="_blank">
-                    🎓 Khan Academy
-                </a>
-                <a href="https://www.wolframalpha.com/" target="_blank">
-                    🧮 Wolfram Alpha
-                </a>
-                <a href="https://translate.google.com/" target="_blank">
-                    🌐 Google Translate
-                </a>
-                <a href="https://www.grammarly.com/" target="_blank">
-                    ✏️ Grammarly
-                </a>
-                <a href="https://www.hebcal.com/converter/" target="_blank">
-                    📅 Hebrew Calendar Converter
-                </a>
-                <a href="https://hebrewcalendar.co.il/" target="_blank" class="featured">
-                    📅 Hebrew Calendar
-                </a>
-                <a href="https://quizlet.com/" target="_blank">
-                    🧠 Quizlet
-                </a>
-            </div>
-        </div>
-
-        <!-- Motivational Quote -->
-        <div class="card">
-            <div class="section-title">💭 Daily Motivation</div>
-            <blockquote id="quote" style="margin:0;padding-left:10px;border-left:3px solid #205081;font-size:1.1em;"></blockquote>
-        </div>
-    </main>
-    <footer>
-        <span>📞 Contact: <a href="mailto:eliahou.roffe@students.ha-mtl.org">eliahou.roffe@students.ha-mtl.org</a></span>
-        <br>
-        <span style="font-size: 0.9em; opacity: 0.8;">Hebrew Academy Dashboard | Last updated: <span id="lastUpdate"></span></span>
-    </footer>
-    <script>
-        // Update timestamp
-        document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
-
-        // Class Schedule Data
-        const classSchedule = {
-            1: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Multimedia", details: "11B 152", room: "152" },
-                { period: 3, time: "11:15 - 12:20", subject: "Physics", details: "11B,11G 051", room: "051" },
-                { period: 4, time: "12:25 - 1:30", subject: "Math SN", details: "11B,11G 160", room: "160" },
-                { period: 5, time: "2:20 - 3:25", subject: "Francais", details: "11B,11G 154", room: "154" },
-                { period: 6, time: "3:35 - 4:40", subject: "Chemistry", details: "11B,11G 052", room: "052" }
-            ],
-            2: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Math SN", details: "11B,11G 160", room: "160" },
-                { period: 3, time: "11:15 - 12:20", subject: "Jewish Lit.", details: "11B 156", room: "156" },
-                { period: 4, time: "12:25 - 1:30", subject: "English", details: "11B,11G 151", room: "151" },
-                { period: 5, time: "2:20 - 3:25", subject: "Financial Ed.", details: "11B 152", room: "152" },
-                { period: 6, time: "3:35 - 4:40", subject: "Phys. Ed.", details: "11B GYM", room: "GYM" }
-            ],
-            3: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Cont. World", details: "11B 154", room: "154" },
-                { period: 3, time: "11:15 - 12:20", subject: "Chemistry", details: "11B,11G 052", room: "052" },
-                { period: 4, time: "12:25 - 1:30", subject: "English", details: "11B,11G 151", room: "151" },
-                { period: 5, time: "2:20 - 3:25", subject: "Francais", details: "11B,11G 154", room: "154" },
-                { period: 6, time: "3:35 - 4:40", subject: "CCQ", details: "11B 160", room: "160" }
-            ],
-            4: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Math SN", details: "11B,11G 160", room: "160" },
-                { period: 3, time: "11:15 - 12:20", subject: "Chumash", details: "11B 156", room: "156" },
-                { period: 4, time: "12:25 - 1:30", subject: "Jewish Lit.", details: "11B 157", room: "157" },
-                { period: 5, time: "2:20 - 3:25", subject: "Physics", details: "11B,11G 051", room: "051" },
-                { period: 6, time: "3:35 - 4:40", subject: "English", details: "11B,11G 151", room: "151" }
-            ],
-            5: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Math SN", details: "11B,11G 160", room: "160" },
-                { period: 3, time: "11:15 - 12:20", subject: "Physics", details: "11B,11G 051", room: "051" },
-                { period: 4, time: "12:25 - 1:30", subject: "Cont. World", details: "11B 154", room: "154" },
-                { period: 5, time: "2:20 - 3:25", subject: "Francais", details: "11B,11G 151", room: "151" },
-                { period: 6, time: "3:35 - 4:40", subject: "CCQ", details: "11B 152", room: "152" }
-            ],
-            6: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Chemistry", details: "11B,11G 052", room: "052" },
-                { period: 3, time: "11:15 - 12:20", subject: "Francais", details: "11B,11G 154", room: "154" },
-                { period: 4, time: "12:25 - 1:30", subject: "Chumash", details: "11B 156", room: "156" },
-                { period: 5, time: "2:20 - 3:25", subject: "Math SN", details: "11B,11G 160", room: "160" },
-                { period: 6, time: "3:35 - 4:40", subject: "English", details: "11B,11G 151", room: "151" }
-            ],
-            7: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Multimedia", details: "11B 151", room: "151" },
-                { period: 3, time: "11:15 - 12:20", subject: "Navi", details: "11B JMPR", room: "JMPR" },
-                { period: 4, time: "12:25 - 1:30", subject: "Math SN", details: "11B,11G 160", room: "160" },
-                { period: 5, time: "2:20 - 3:25", subject: "Chemistry", details: "11B,11G 052", room: "052" },
-                { period: 6, time: "3:35 - 4:40", subject: "Phys. Ed.", details: "11B GYM", room: "GYM" }
-            ],
-            8: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Francais", details: "11B,11G 154", room: "154" },
-                { period: 3, time: "11:15 - 12:20", subject: "Chumash", details: "11B 156", room: "156" },
-                { period: 4, time: "12:25 - 1:30", subject: "English", details: "11B,11G 151", room: "151" },
-                { period: 5, time: "2:20 - 3:25", subject: "Physics", details: "11B,11G 051", room: "051" },
-                { period: 6, time: "3:35 - 4:40", subject: "Israel Studies", details: "11B 156", room: "156" }
-            ],
-            9: [
-                { period: 1, time: "8:50 - 9:55", subject: "SCG", details: "TA 11B JMPR", room: "11B JMPR" },
-                { period: 2, time: "10:00 - 11:05", subject: "Physics", details: "11B,11G 051", room: "051" },
-                { period: 3, time: "11:15 - 12:20", subject: "Navi", details: "11B JMPR", room: "JMPR" },
-                { period: 4, time: "12:25 - 1:30", subject: "Financial Ed.", details: "11B 152", room: "152" },
-                { period: 5, time: "2:20 - 3:25", subject: "Chemistry", details: "11B,11G 052", room: "052" },
-                { period: 6, time: "3:35 - 4:40", subject: "English", details: "11B,11G 151", room: "151" }
-            ]
-        };
-
-        // Function to update schedule display based on selected cycle day
-        function updateSchedule() {
-            const cycleDay = document.getElementById('cycleDay').value;
-            const scheduleBody = document.getElementById('scheduleBody');
+            `;
             
-            // Clear existing schedule
-            scheduleBody.innerHTML = '';
+            container.innerHTML = html;
             
-            // Get schedule for selected day
-            const daySchedule = classSchedule[cycleDay];
+            // Highlight current and next periods if this is today's schedule
+            if (day == getCurrentCycleDay()) {
+                highlightCurrentPeriod();
+            }
+        }
+        
+        // Calculate current cycle day (for demo, we'll use a fixed day)
+        function getCurrentCycleDay() {
+            // In real implementation, this would calculate the actual cycle day
+            // For now, we'll return day 3 (fixed for demo)
+            return 3;
+        }
+        
+        // Highlight current and next periods in the timetable
+        function highlightCurrentPeriod() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours * 60 + minutes;
             
-            // Populate schedule
-            daySchedule.forEach(cls => {
+            // Define period times in minutes since midnight
+            const periodTimes = [
+                { start: 8 * 60 + 50, end: 9 * 60 + 55, period: 1 },
+                { start: 10 * 60, end: 11 * 60 + 5, period: 2 },
+                { start: 11 * 60 + 15, end: 12 * 60 + 20, period: 3 },
+                { start: 12 * 60 + 25, end: 13 * 60 + 30, period: 4 },
+                { start: 14 * 60 + 20, end: 15 * 60 + 25, period: 5 },
+                { start: 15 * 60 + 35, end: 16 * 60 + 40, period: 6 }
+            ];
+            
+            // Find current and next periods
+            let currentPeriod = null;
+            let nextPeriod = null;
+            
+            for (let i = 0; i < periodTimes.length; i++) {
+                const period = periodTimes[i];
+                if (currentTime >= period.start && currentTime <= period.end) {
+                    currentPeriod = period.period;
+                    nextPeriod = (i < periodTimes.length - 1) ? periodTimes[i + 1].period : null;
+                    break;
+                } else if (currentTime < period.start) {
+                    nextPeriod = period.period;
+                    break;
+                }
+            }
+            
+            // Apply highlighting
+            if (currentPeriod) {
+                const currentRow = document.getElementById(`period-${currentPeriod}`);
+                if (currentRow) {
+                    currentRow.classList.add('current-cell');
+                }
+                
+                // Update status display
+                const currentDay = getCurrentCycleDay();
+                const currentClass = classSchedule[currentDay].find(p => p.period === currentPeriod);
+                if (currentClass) {
+                    document.getElementById('currentClass').innerText = `Current: ${currentClass.subject} (Period ${currentPeriod})`;
+                }
+            } else {
+                document.getElementById('currentClass').innerText = "No class in session";
+            }
+            
+            if (nextPeriod) {
+                const nextRow = document.getElementById(`period-${nextPeriod}`);
+                if (nextRow) {
+                    nextRow.classList.add('next-cell');
+                }
+                
+                // Update next class display
+                const currentDay = getCurrentCycleDay();
+                const nextClass = classSchedule[currentDay].find(p => p.period === nextPeriod);
+                if (nextClass) {
+                    document.getElementById('nextClass').innerText = `Next: ${nextClass.subject} (Period ${nextPeriod}, ${nextClass.time})`;
+                }
+            } else {
+                document.getElementById('nextClass').innerText = "No more classes today";
+            }
+        }
+        
+        // Update today's schedule with current and next class indicators
+        function updateTodaySchedule() {
+            const currentDay = getCurrentCycleDay();
+            document.getElementById('cycleNumber').innerText = currentDay;
+            
+            const schedule = classSchedule[currentDay];
+            const tbody = document.getElementById('todayScheduleBody');
+            tbody.innerHTML = '';
+            
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours * 60 + minutes;
+            
+            schedule.forEach(cls => {
                 const row = document.createElement('tr');
-                // Add class for styling based on subject
+                
+                // Parse period times
+                const timeRange = cls.time.split(' - ');
+                const startTime = timeRange[0].split(':');
+                const endTime = timeRange[1].split(':');
+                const startMinutes = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
+                const endMinutes = parseInt(endTime[0]) * 60 + parseInt(endTime[1]);
+                
+                // Check if this is the current or next class
+                let status = '';
+                if (currentTime >= startMinutes && currentTime <= endMinutes) {
+                    row.classList.add('current');
+                    status = '<span class="badge badge-success">Current</span>';
+                } else if (currentTime < startMinutes && 
+                          (!schedule.some(c => {
+                              const cTimes = c.time.split(' - ');
+                              const cStart = cTimes[0].split(':');
+                              const cEnd = cTimes[1].split(':');
+                              const cStartMinutes = parseInt(cStart[0]) * 60 + parseInt(cStart[1]);
+                              return currentTime < cStartMinutes && cStartMinutes < startMinutes;
+                          }))) {
+                    row.classList.add('next');
+                    status = '<span class="badge badge-warning">Next</span>';
+                } else if (currentTime > endMinutes) {
+                    status = '<span class="badge">Completed</span>';
+                } else {
+                    status = '<span class="badge">Upcoming</span>';
+                }
+                
+                // Apply subject-specific styling
                 const subjectClass = cls.subject.includes(' ') ? 
                     'subject-' + cls.subject.split(' ')[0] : 
                     'subject-' + cls.subject;
-                
-                row.className = subjectClass;
+                row.classList.add(subjectClass);
                 
                 row.innerHTML = `
                     <td>${cls.period}</td>
                     <td>${cls.time}</td>
                     <td><strong>${cls.subject}</strong></td>
                     <td>${cls.room}</td>
+                    <td>${status}</td>
                 `;
-                scheduleBody.appendChild(row);
+                tbody.appendChild(row);
+            });
+        }
+
+        // HOMEWORK FUNCTIONS
+        function loadHomework() {
+            const homework = JSON.parse(localStorage.getItem('eliahou_homework') || "[]");
+            const container = document.getElementById('homeworkList');
+            container.innerHTML = '';
+            
+            if (homework.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #888; padding: 15px;">No homework added yet.</p>';
+                return;
+            }
+            
+            homework.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = `task-item ${item.completed ? 'task-complete' : ''}`;
+                div.innerHTML = `
+                    <input type="checkbox" ${item.completed ? 'checked' : ''} 
+                           onchange="toggleHomeworkCompletion(${idx})">
+                    <div class="task-content">
+                        <div class="task-subject">${item.subject}</div>
+                        <div class="task-details">${item.details}</div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="danger small" onclick="removeHomework(${idx})">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addHomework() {
+            const subject = document.getElementById('homeworkSubject').value;
+            const details = document.getElementById('homeworkDetails').value;
+            
+            if (!subject || !details) {
+                alert("Please select a subject and enter homework details.");
+                return;
+            }
+            
+            const homework = JSON.parse(localStorage.getItem('eliahou_homework') || "[]");
+            homework.push({
+                subject: subject,
+                details: details,
+                completed: false,
+                created: new Date().toISOString()
             });
             
-            // Save selected cycle day to localStorage
-            localStorage.setItem('eliahou_cycle_day', cycleDay);
+            localStorage.setItem('eliahou_homework', JSON.stringify(homework));
+            
+            // Clear inputs
+            document.getElementById('homeworkSubject').value = "";
+            document.getElementById('homeworkDetails').value = "";
+            
+            loadHomework();
         }
 
-        // Set cycle day from localStorage if available
-        document.getElementById('cycleDay').value = localStorage.getItem('eliahou_cycle_day') || '1';
-        updateSchedule();
-
-        // NOTES (persistent per browser)
-        function loadNote() {
-            document.getElementById('note').value = localStorage.getItem('eliahou_note') || '';
+        function toggleHomeworkCompletion(index) {
+            const homework = JSON.parse(localStorage.getItem('eliahou_homework') || "[]");
+            homework[index].completed = !homework[index].completed;
+            localStorage.setItem('eliahou_homework', JSON.stringify(homework));
+            loadHomework();
         }
-        function saveNote() {
-            localStorage.setItem('eliahou_note', document.getElementById('note').value);
+
+        function removeHomework(index) {
+            const homework = JSON.parse(localStorage.getItem('eliahou_homework') || "[]");
+            homework.splice(index, 1);
+            localStorage.setItem('eliahou_homework', JSON.stringify(homework));
+            loadHomework();
+        }
+
+        // TESTS AND QUIZZES FUNCTIONS
+        function loadTests() {
+            const tests = JSON.parse(localStorage.getItem('eliahou_tests') || "[]");
+            const container = document.getElementById('testsList');
+            container.innerHTML = '';
+            
+            if (tests.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #888; padding: 15px;">No tests or quizzes added yet.</p>';
+                return;
+            }
+            
+            tests.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = `task-item ${item.completed ? 'task-complete' : ''}`;
+                
+                // Format date nicely
+                const date = new Date(item.date);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                div.innerHTML = `
+                    <input type="checkbox" ${item.completed ? 'checked' : ''} 
+                           onchange="toggleTestCompletion(${idx})">
+                    <div class="task-content">
+                        <div class="task-subject">
+                            ${item.subject} 
+                            <span class="badge badge-${item.type === 'Test' ? 'danger' : 'warning'}">${item.type}</span>
+                            <span class="badge badge-primary">${formattedDate}</span>
+                        </div>
+                        <div class="task-details">${item.details}</div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="danger small" onclick="removeTest(${idx})">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addTest() {
+            const subject = document.getElementById('testSubject').value;
+            const date = document.getElementById('testDate').value;
+            const type = document.getElementById('testType').value;
+            const details = document.getElementById('testDetails').value;
+            
+            if (!subject || !date) {
+                alert("Please select a subject and date for the test/quiz.");
+                return;
+            }
+            
+            const tests = JSON.parse(localStorage.getItem('eliahou_tests') || "[]");
+            tests.push({
+                subject: subject,
+                date: date,
+                type: type,
+                details: details,
+                completed: false,
+                created: new Date().toISOString()
+            });
+            
+            localStorage.setItem('eliahou_tests', JSON.stringify(tests));
+            
+            // Clear inputs
+            document.getElementById('testSubject').value = "";
+            document.getElementById('testDate').value = "";
+            document.getElementById('testType').value = "Test";
+            document.getElementById('testDetails').value = "";
+            
+            loadTests();
+        }
+
+        function toggleTestCompletion(index) {
+            const tests = JSON.parse(localStorage.getItem('eliahou_tests') || "[]");
+            tests[index].completed = !tests[index].completed;
+            localStorage.setItem('eliahou_tests', JSON.stringify(tests));
+            loadTests();
+        }
+
+        function removeTest(index) {
+            const tests = JSON.parse(localStorage.getItem('eliahou_tests') || "[]");
+            tests.splice(index, 1);
+            localStorage.setItem('eliahou_tests', JSON.stringify(tests));
+            loadTests();
+        }
+
+        // FAMILY NOTES
+        function loadFamilyNote() {
+            document.getElementById('familyNote').value = localStorage.getItem('eliahou_family_note') || '';
+        }
+        
+        function saveFamilyNote() {
+            localStorage.setItem('eliahou_family_note', document.getElementById('familyNote').value);
             const msg = document.getElementById('savedMsg');
             msg.style.display = 'inline';
             setTimeout(() => { msg.style.display = 'none'; }, 2000);
         }
-        loadNote();
-
-        // Auto-save notes as user types
-        document.getElementById('note').addEventListener('input', function() {
+        
+        // Auto-save family notes
+        document.getElementById('familyNote').addEventListener('input', function() {
             clearTimeout(window.noteTimeout);
-            window.noteTimeout = setTimeout(saveNote, 2000);
+            window.noteTimeout = setTimeout(saveFamilyNote, 2000);
         });
 
-        // TO-DO LIST
-        function loadTodos() {
-            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
-            const container = document.getElementById('todoList');
-            container.innerHTML = '';
+        // On page load
+        window.onload = function() {
+            // Create day selector
+            createDaySelector();
             
-            if (todos.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No tasks yet. Add one above! 📝</p>';
-                return;
-            }
+            // Load saved day or default to today's cycle day
+            const savedDay = localStorage.getItem('eliahou_selected_day') || getCurrentCycleDay();
+            document.querySelector(`.day-btn[data-day="${savedDay}"]`).classList.add('active');
+            displayTimetable(savedDay);
             
-            todos.forEach((todo, idx) => {
-                const row = document.createElement('div');
-                row.className = 'todo-row';
-                row.innerHTML = `
-                    <input type="checkbox" ${todo.done?'checked':''} onchange="toggleTodo(${idx})">
-                    <span class="${todo.done?'todo-completed':''}">${todo.text}</span>
-                    <button class="remove" onclick="removeTodo(${idx})">🗑️</button>
-                `;
-                container.appendChild(row);
-            });
-        }
-        function addTodo() {
-            const val = document.getElementById('todoInput').value.trim();
-            if (!val) return;
-            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
-            todos.push({text: val, done: false, created: new Date().toLocaleDateString()});
-            localStorage.setItem('eliahou_todos', JSON.stringify(todos));
-            document.getElementById('todoInput').value = '';
-            loadTodos();
-        }
-        function toggleTodo(idx) {
-            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
-            todos[idx].done = !todos[idx].done;
-            localStorage.setItem('eliahou_todos', JSON.stringify(todos));
-            loadTodos();
-        }
-        function removeTodo(idx) {
-            const todos = JSON.parse(localStorage.getItem('eliahou_todos') || "[]");
-            todos.splice(idx, 1);
-            localStorage.setItem('eliahou_todos', JSON.stringify(todos));
-            loadTodos();
-        }
-        
-        // Allow Enter key to add todos
-        document.getElementById('todoInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addTodo();
-            }
-        });
-        
-        window.toggleTodo = toggleTodo;
-        window.removeTodo = removeTodo;
-        loadTodos();
-
-        // 7-DAY WEATHER FORECAST (Open-Meteo API, Côte Saint-Luc)
-        function loadWeather() {
-            fetch('https://api.open-meteo.com/v1/forecast?latitude=45.4975&longitude=-73.6658&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=America%2FToronto')
-                .then(res => res.json())
-                .then(data => {
-                    const daily = data.daily;
-                    const container = document.getElementById('weather');
-                    container.innerHTML = '';
-                    
-                    // Get weather icon based on code
-                    function getWeatherIcon(code) {
-                        if (code === 0) return '☀️'; // Clear sky
-                        if (code <= 3) return '⛅'; // Partly cloudy
-                        if (code <= 48) return '☁️'; // Cloudy
-                        if (code <= 57) return '🌧️'; // Drizzle
-                        if (code <= 67) return '🌧️'; // Rain
-                        if (code <= 77) return '❄️'; // Snow
-                        if (code <= 82) return '🌧️'; // Rain showers
-                        if (code <= 86) return '❄️'; // Snow showers
-                        return '⛈️'; // Thunderstorm
-                    }
-                    
-                    // Format date: "Mon, Sep 10"
-                    function formatDate(dateStr) {
-                        const date = new Date(dateStr);
-                        return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-                    }
-                    
-                    // Create a card for each day
-                    for (let i = 0; i < 7; i++) {
-                        const dayCard = document.createElement('div');
-                        dayCard.className = 'weather-day';
-                        dayCard.innerHTML = `
-                            <div class="weather-date">${formatDate(daily.time[i])}</div>
-                            <div class="weather-icon">${getWeatherIcon(daily.weathercode[i])}</div>
-                            <div class="weather-temp">${Math.round(daily.temperature_2m_max[i])}°C / ${Math.round(daily.temperature_2m_min[i])}°C</div>
-                            <div>${daily.precipitation_sum[i] > 0 ? `🌧️ ${daily.precipitation_sum[i]}mm` : ''}</div>
-                        `;
-                        container.appendChild(dayCard);
-                    }
-                })
-                .catch(() => {
-                    document.getElementById('weather').innerHTML = 
-                        '<div style="text-align: center; color: #d33; padding: 20px;">⚠️ Weather forecast unavailable</div>';
-                });
-        }
-        loadWeather();
-
-        // MOTIVATIONAL QUOTE (with fallback and daily rotation)
-        function getDailyQuote() {
-            const quotes = [
-                {q: "The only way to do great work is to love what you do.", a: "Steve Jobs"},
-                {q: "Success is not the key to happiness. Happiness is the key to success.", a: "Albert Schweitzer"},
-                {q: "Believe you can and you're halfway there.", a: "Theodore Roosevelt"},
-                {q: "Don't watch the clock; do what it does. Keep going.", a: "Sam Levenson"},
-                {q: "You are never too old to set another goal or to dream a new dream.", a: "C.S. Lewis"},
-                {q: "It does not matter how slowly you go as long as you do not stop.", a: "Confucius"},
-                {q: "Keep your face always toward the sunshine—and shadows will fall behind you.", a: "Walt Whitman"},
-                {q: "Education is the most powerful weapon which you can use to change the world.", a: "Nelson Mandela"},
-                {q: "The beautiful thing about learning is that no one can take it away from you.", a: "B.B. King"},
-                {q: "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible.", a: "Richard Feynman"}
-            ];
-            const day = new Date().getDate();
-            const idx = day % quotes.length;
-            return quotes[idx];
-        }
-
-        function loadQuote() {
-            fetch('https://zenquotes.io/api/random')
-                .then(res => res.json())
-                .then(data => {
-                    if (Array.isArray(data) && data.length && data[0].q) {
-                        document.getElementById('quote').innerText = data[0].q + " — " + data[0].a;
-                    } else {
-                        throw new Error("Empty quote from API");
-                    }
-                })
-                .catch(() => {
-                    const fallback = getDailyQuote();
-                    document.getElementById('quote').innerText = fallback.q + " — " + fallback.a;
-                });
-        }
-        loadQuote();
+            // Update today's schedule
+            updateTodaySchedule();
+            
+            // Load homework and tests
+            loadHomework();
+            loadTests();
+            
+            // Load family notes
+            loadFamilyNote();
+            
+            // Set today's date in test date input
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('testDate').value = today;
+            
+            // Schedule periodic updates
+            setInterval(updateTodaySchedule, 60000); // Update every minute
+        };
     </script>
 </body>
 </html>
